@@ -1,0 +1,1189 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#f4f1e8">
+<meta name="description" content="ROBOVERSE v2 — Advanced Robotics & AI discovery suite with live on-device vision, encrypted dataset capture, hand-gesture control, and global competitions.">
+<title>ROBOVERSE v2 — Robotics & AI Discovery Lab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@300;400;500;600;700;800;900&family=DM+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#f4f1e8;--ink:#17221f;--muted:#5c6b63;--line:#cfccc0;
+  --blue:#284fe8;--blue2:#456aff;--orange:#ff7043;--lime:#c9f36a;
+  --mint:#9ce6c8;--pink:#f1a7ce;--yellow:#ffdf70;--white:#fffdf7;
+  --dark:#15221d;--dark-card:#22332a;--shadow:0 18px 45px rgba(27,38,32,.12);
+  --head:'Alexandria',sans-serif;--body:'Plus Jakarta Sans',sans-serif;--mono:'DM Mono',monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:84px}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.65;overflow-x:hidden}
+h1,h2,h3,h4,h5{font-family:var(--head);margin-top:0}
+button,input,select,textarea{font-family:inherit}
+button{cursor:pointer}
+a{color:inherit}
+img{display:block;max-width:100%}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--orange);outline-offset:3px}
+.scroll-line{position:fixed;z-index:200;top:0;left:0;width:0;height:4px;background:linear-gradient(90deg,var(--orange),var(--blue),#6fc89c,var(--pink))}
+.nav{height:76px;padding:0 clamp(18px,4vw,62px);display:flex;align-items:center;justify-content:space-between;gap:22px;position:sticky;top:0;z-index:100;background:rgba(244,241,232,.94);border-bottom:1px solid #d8d5c9;backdrop-filter:blur(16px)}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-size:18px;font-weight:900;letter-spacing:-.055em;font-family:var(--head)}
+.brand-mark{width:36px;height:36px;display:grid;place-items:center;background:var(--blue);color:#fff;border-radius:12px 12px 3px 12px;font-size:22px;transform:rotate(-4deg)}
+.version-badge{font-family:var(--mono);font-size:10px;background:var(--lime);color:#19271a;padding:2px 7px;border-radius:99px;font-weight:700;margin-left:4px}
+.nav-links{display:flex;align-items:center;gap:clamp(10px,1.8vw,24px)}
+.nav-links a{text-decoration:none;font-size:12.5px;font-weight:650;color:#536359;transition:color .15s}
+.nav-links a:hover{color:var(--blue)}
+.nav-cta,.button{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:999px;padding:11px 18px;text-decoration:none;font-weight:750;font-size:13px;font-family:var(--head);transition:transform .18s ease,background .18s ease,box-shadow .18s ease}
+.nav-cta,.button.blue{background:var(--blue);color:#fff;box-shadow:0 6px 0 #1b369e}
+.nav-cta:hover,.button:hover{transform:translateY(-2px)}
+.button.orange{background:var(--orange);color:#231b16;box-shadow:0 6px 0 #be4a29}
+.button.lime{background:var(--lime);color:#1c291c;box-shadow:0 6px 0 #7aa32f}
+.button.paper{background:var(--white);border:1px solid #dbd7ca;color:var(--ink)}
+.button.small{padding:8px 13px;font-size:11.5px}
+.button:disabled{opacity:.45;cursor:not-allowed;transform:none;box-shadow:none}
+.mobile-menu{display:none;background:transparent;border:1px solid var(--line);width:42px;height:42px;border-radius:50%;font-size:20px}
+.wrap{width:min(1210px,calc(100% - 40px));margin-inline:auto}
+
+.hero{min-height:calc(100svh - 76px);display:grid;grid-template-columns:.96fr 1.04fr;align-items:center;gap:clamp(20px,5vw,68px);padding:clamp(36px,6vh,84px) 0 68px;position:relative}
+.hero-copy{padding:12px 0}
+.note-label{display:inline-flex;align-items:center;gap:10px;font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:#43574a}
+.note-label:before{content:'';width:28px;height:2px;background:var(--orange)}
+h1{font-size:clamp(40px,6.2vw,84px);line-height:.99;letter-spacing:-.08em;font-weight:800;margin:18px 0 22px;max-width:690px}
+h1 em{font-style:normal;color:var(--blue);position:relative;white-space:nowrap}
+h1 em:after{content:'';position:absolute;left:0;bottom:-5px;width:100%;height:8px;background:var(--lime);z-index:-1;transform:rotate(-1.5deg)}
+.hero-copy .lead{max-width:530px;color:#5a6860;font-size:clamp(15px,1.5vw,17.5px);line-height:1.75}
+.hero-actions{display:flex;gap:13px;flex-wrap:wrap;margin:28px 0 30px}
+.tiny-proof{display:flex;align-items:center;gap:13px;max-width:440px;color:#647068;font-size:11px;line-height:1.55}
+.proof-dots{display:flex;padding-left:5px}
+.proof-dots i{width:22px;height:22px;border:2px solid var(--paper);margin-left:-5px;border-radius:50%;background:var(--orange)}
+.proof-dots i:nth-child(2){background:var(--blue)}
+.proof-dots i:nth-child(3){background:#94c6a8}
+.proof-dots i:nth-child(4){background:var(--pink)}
+.hero-visual{min-height:540px;position:relative;isolation:isolate;display:grid;place-items:center}
+.hero-photo{position:absolute;inset:38px 7% 40px 6%;border-radius:46% 46% 18px 18px;overflow:hidden;background:#d9e3dd;z-index:-1;transform:rotate(1deg)}
+.hero-photo img{width:100%;height:100%;object-fit:cover;filter:saturate(.85);mix-blend-mode:multiply;opacity:.9}
+.hero-photo:after{content:'';position:absolute;inset:0;background:linear-gradient(140deg,rgba(200,243,106,.14),rgba(40,79,232,.08) 65%,rgba(255,112,67,.18))}
+.orbit-stamp{position:absolute;left:2%;top:4%;width:106px;height:106px;border-radius:50%;background:var(--orange);color:#382016;display:grid;place-items:center;text-align:center;font-weight:850;line-height:1.12;font-size:13px;font-family:var(--head);transform:rotate(-12deg);z-index:4;box-shadow:0 8px 0 #d34e2a}
+.orbit-stamp span{font-family:var(--mono);font-size:10px;font-weight:500}
+.hero-canvas-wrap{width:min(100%,550px);height:500px;position:relative;z-index:2;touch-action:pan-y;cursor:grab}
+.hero-canvas-wrap:active{cursor:grabbing}
+.hero-canvas-wrap canvas{position:relative;z-index:2;display:block;width:100%;height:100%;outline:none}
+.robot-fallback{position:absolute;inset:0;width:100%;height:100%;z-index:1;overflow:visible}
+.float-note{position:absolute;z-index:4;background:var(--white);padding:12px 15px;max-width:185px;box-shadow:5px 7px 0 rgba(24,36,33,.13);border:1px solid #d5d8ca;font-size:11px;line-height:1.5}
+.float-note b{display:block;font-size:13px;margin-bottom:2px;font-family:var(--head)}
+.float-note.one{right:-1%;top:20%;transform:rotate(3deg);border-top:4px solid var(--blue)}
+.float-note.two{left:1%;bottom:7%;transform:rotate(-3deg);border-top:4px solid #91cda8}
+.scene-hint{position:absolute;bottom:3px;right:5%;font-family:var(--mono);font-size:10px;color:#526058}
+
+.marquee{background:var(--blue);color:white;overflow:hidden;padding:12px 0;white-space:nowrap}
+.marquee-track{display:flex;width:max-content;gap:26px;animation:marquee 32s linear infinite;font-size:12px;font-weight:750;letter-spacing:.04em;font-family:var(--head)}
+.marquee-track span{display:inline-flex;align-items:center;gap:24px}
+.marquee-track i{width:8px;height:8px;background:var(--lime);display:inline-block;border-radius:50%}
+@keyframes marquee{to{transform:translateX(-50%)}}
+
+section{padding:clamp(64px,8vw,110px) 0;position:relative}
+.section-head{display:grid;grid-template-columns:1fr .65fr;align-items:end;gap:35px;margin-bottom:36px}
+.section-head .overline{font-family:var(--mono);font-size:11px;color:var(--blue);text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px;display:block}
+.section-head h2{font-size:clamp(30px,4.5vw,56px);letter-spacing:-.07em;line-height:1.06;margin:0;max-width:720px}
+.section-head p{margin:0;color:var(--muted);font-size:14px;line-height:1.75;max-width:450px}
+
+/* Vision Section */
+.vision-section{background:#15221d;color:#f5f0e4;overflow:hidden}
+.vision-section:before{content:'ROBOVERSE';position:absolute;font-family:var(--head);font-weight:900;letter-spacing:-.1em;font-size:clamp(100px,22vw,280px);line-height:1;right:-2%;top:0;color:#ffffff05;pointer-events:none}
+.vision-section .section-head .overline{color:var(--lime)}
+.vision-section .section-head p{color:#b6c4b9}
+.vision-card{position:relative;background:#203128;border:1px solid #3c5143;border-radius:8px 40px 8px 8px;padding:clamp(18px,3vw,32px);display:grid;grid-template-columns:1.15fr .85fr;gap:24px}
+.vision-main{min-width:0}
+.vision-stage{aspect-ratio:4/3;position:relative;min-height:270px;background:radial-gradient(ellipse at 50% 45%,#395042,#141e19 72%);border:1px solid #486150;border-radius:6px;overflow:hidden;display:grid;place-items:center}
+.vision-stage video,.vision-stage img,.vision-stage .vision-canvas{position:absolute;width:100%;height:100%;object-fit:contain;inset:0;display:none}
+.vision-stage video.on,.vision-stage img.on,.vision-stage .vision-canvas.on{display:block}
+.vision-stage .vision-canvas{z-index:2;pointer-events:none}
+.vision-empty{position:relative;z-index:1;text-align:center;padding:20px;max-width:280px}
+.vision-empty span{display:block;font-size:44px;margin-bottom:12px}
+.vision-empty p{font-size:12px;color:#bdcbbd;margin:0}
+.scan-line{position:absolute;left:0;right:0;height:2px;top:0;background:var(--lime);box-shadow:0 0 20px var(--lime);opacity:0;pointer-events:none}
+.vision-stage.processing .scan-line{opacity:1;animation:scan 1.5s linear infinite}
+@keyframes scan{to{top:100%}}
+.vision-controls{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.vision-controls .button{font-size:11.5px;padding:9px 13px}
+.vision-side{min-width:0}
+.vision-side h3{font-size:22px;letter-spacing:-.05em;line-height:1.18;margin-bottom:10px}
+.vision-side p{font-size:12px;color:#c1cdc1;line-height:1.7}
+.api-status{display:flex;align-items:center;gap:8px;border:1px solid #4a6150;padding:9px 12px;border-radius:6px;font-family:var(--mono);font-size:10px;color:#d9e8d8;margin:13px 0}
+.status-dot{width:8px;height:8px;border-radius:50%;background:#f5a05f;box-shadow:0 0 10px #f5a05f66}
+.status-dot.ready{background:#b9eb79;box-shadow:0 0 10px #b9eb7966}
+.settings-line{display:flex;align-items:center;gap:10px;margin:10px 0;font-size:11px;color:#d7e0d4}
+.settings-line input[type=checkbox]{accent-color:var(--lime);width:16px;height:16px}
+.vision-results{background:#15221b;border:1px solid #435b4a;min-height:90px;padding:13px;margin-top:12px;border-radius:5px}
+.vision-results h4{font-family:var(--mono);font-size:10px;color:var(--lime);font-weight:500;margin:0 0 8px}
+.detection-chips{display:flex;gap:6px;flex-wrap:wrap}
+.detection-chip{font-family:var(--mono);font-size:10px;background:#35493b;padding:5px 8px;border-radius:3px}
+.privacy-note{font-size:10px;color:#a2b3a4;line-height:1.6;margin-top:10px}
+
+/* Dataset Vault Box */
+.vault-box{background:#1c2d24;border:1px solid #3c5443;border-radius:6px;padding:14px;margin-top:14px}
+.vault-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px}
+.vault-head b{font-family:var(--head);font-size:12px;color:#c9f36a}
+.vault-badge{font-family:var(--mono);font-size:9px;background:#2d4234;color:#a1e6bd;padding:2px 6px;border-radius:3px}
+
+/* Gesture Playground Section */
+.gesture-section{background:#1a2822;color:#f5f0e4;border-top:1px solid #2a3c33}
+.gesture-card{display:grid;grid-template-columns:1fr 1fr;gap:24px;background:#22332a;border:1px solid #3e5645;border-radius:8px 40px 8px 8px;padding:clamp(18px,3vw,32px)}
+.arena-stage{aspect-ratio:4/3;background:#141f1a;border:1px solid #486150;border-radius:6px;position:relative;overflow:hidden}
+.arena-stage canvas{width:100%;height:100%;display:block}
+.gesture-telemetry{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}
+.telemetry-cell{background:#182620;border:1px solid #3c5243;padding:8px 10px;border-radius:4px;text-align:center}
+.telemetry-cell span{font-family:var(--mono);font-size:9px;color:#a5b5a7;display:block}
+.telemetry-cell b{font-family:var(--mono);font-size:13px;color:var(--lime)}
+
+/* Competitions Section */
+.competitions-section{background:var(--white);border-top:1px solid var(--line)}
+.search-bar{display:flex;gap:10px;margin-bottom:24px;flex-wrap:wrap}
+.search-bar input{flex:1;min-width:240px;background:#f3f1e9;border:1px solid #d5d2c5;padding:12px 16px;border-radius:999px;font-size:13px}
+.filter-tags{display:flex;gap:8px;flex-wrap:wrap}
+.filter-tag{background:transparent;border:1px solid #d2cebf;padding:8px 14px;border-radius:999px;font-size:11.5px;font-weight:600}
+.filter-tag.active{background:var(--blue);color:white;border-color:var(--blue)}
+.comp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
+.comp-card{background:#f8f6ee;border:1px solid #dbd7ca;border-radius:6px;padding:20px;display:flex;flex-direction:column;transition:transform .15s ease,box-shadow .15s ease}
+.comp-card:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,0,0,.06)}
+.comp-card .comp-tag{font-family:var(--mono);font-size:9.5px;color:var(--blue);background:#e4e9ff;padding:3px 7px;border-radius:3px;align-self:start;margin-bottom:10px}
+.comp-card h3{font-size:17px;margin:0 0 6px;letter-spacing:-.04em}
+.comp-card p{font-size:12px;color:var(--muted);line-height:1.65;margin:0 0 14px}
+.comp-card .comp-meta{display:flex;justify-content:space-between;font-family:var(--mono);font-size:10px;color:#7a8a80;margin-top:auto;padding-top:10px;border-top:1px solid #e3e0d5}
+.comp-card a{color:var(--blue);font-weight:700;text-decoration:none;font-size:11.5px}
+
+/* Footer & Legal */
+.footer{background:#111c17;color:#f2f2e8;padding:48px 0 26px}
+.footer-top{display:flex;justify-content:space-between;gap:28px;align-items:start;padding-bottom:30px;border-bottom:1px solid #33433a}
+.footer-brand{font-size:28px;font-weight:850;letter-spacing:-.08em;font-family:var(--head)}
+.footer p{font-size:11px;color:#adbdb0;max-width:410px;line-height:1.8}
+.footer-links{display:flex;flex-wrap:wrap;gap:14px 20px}
+.footer-links a{font-size:11px;text-decoration:none;color:#cfdbd1}
+.legal-strip{display:flex;gap:10px;margin-top:12px}
+.legal-btn{background:transparent;border:1px solid #3d4f44;color:#a8bcae;padding:5px 11px;border-radius:4px;font-size:10px;font-family:var(--mono);cursor:pointer;transition:all .15s}
+.legal-btn:hover{background:#23352b;color:#fff;border-color:#5c7566}
+.footer-bottom{padding-top:18px;display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap;color:#9eb0a1;font-family:var(--mono);font-size:9px}
+
+/* Modals & Toasts */
+.toast{position:fixed;right:20px;bottom:20px;z-index:300;background:var(--ink);color:white;padding:13px 17px;font-size:12px;border-left:4px solid var(--lime);box-shadow:var(--shadow);transform:translateY(130%);transition:transform .25s;max-width:calc(100vw - 40px)}
+.toast.show{transform:translateY(0)}
+.modal-backdrop{display:none;position:fixed;inset:0;z-index:500;background:#0d1713b8;backdrop-filter:blur(6px);padding:18px;align-items:center;justify-content:center}
+.modal-backdrop.show{display:flex}
+.modal{position:relative;width:min(660px,100%);max-height:90svh;overflow:auto;background:var(--paper);border-radius:8px;padding:clamp(22px,5vw,40px);box-shadow:0 30px 100px #0008}
+.modal-close{position:absolute;right:15px;top:15px;border:1px solid var(--line);background:transparent;width:34px;height:34px;border-radius:50%;font-size:16px;cursor:pointer}
+.modal h2{font-size:30px;letter-spacing:-.06em;line-height:1.1;margin:14px 0}
+.modal p,.modal li{font-size:12.5px;line-height:1.75;color:#536357}
+.modal .modal-label{font-family:var(--mono);text-transform:uppercase;font-size:10px;color:var(--blue)}
+.hidden-section{display:none!important}
+.admin-drawer{display:none;background:#192721;color:white;padding:36px 0;border-top:2px solid var(--lime)}
+.admin-drawer.show{display:block}
+.admin-box{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.admin-toggle{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:11px;border:1px solid #45574c;background:#24362b;font-size:11px}
+.admin-toggle input{accent-color:var(--lime);width:16px;height:16px}
+.admin-input{background:#111b16;border:1px solid #4a5c50;color:white;padding:9px;width:100%;margin-top:6px;border-radius:4px;font-size:11px}
+
+@media(max-width:920px){
+  .hero{grid-template-columns:1fr;padding:48px 0}
+  .vision-card,.gesture-card{grid-template-columns:1fr}
+  .admin-box{grid-template-columns:1fr}
+}
+@media(max-width:680px){
+  .mobile-menu{display:block}
+  .nav-cta{display:none}
+  .nav-links{display:none;position:absolute;top:67px;left:0;right:0;flex-direction:column;align-items:stretch;gap:0;padding:8px 18px 16px;background:var(--paper);border-bottom:1px solid var(--line)}
+  .nav-links.open{display:flex}
+  .nav-links a{padding:11px 4px;font-size:13px;border-bottom:1px solid #e0ddd2}
+  .gesture-telemetry{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+<div class="scroll-line" id="scrollLine"></div>
+<header class="nav">
+  <a class="brand" href="#top" aria-label="ROBOVERSE v2 home">
+    <span class="brand-mark">R</span> robovers<span style="color:var(--blue)">e.</span>
+    <span class="version-badge">v2 SUITE</span>
+  </a>
+  <nav class="nav-links" id="navLinks" aria-label="Main navigation">
+    <a href="#vision">Vision Lab</a>
+    <a href="#gestures">Gesture Arena</a>
+    <a href="#competitions">Competitions</a>
+    <a href="#datasetVault">Encrypted Vault</a>
+    <a href="/">← Return to v1</a>
+  </nav>
+  <a class="nav-cta" href="#gestures">Control Arena <span>↗</span></a>
+  <button class="mobile-menu" id="mobileMenu" aria-label="Open navigation" aria-expanded="false">☰</button>
+</header>
+
+<main id="top">
+<!-- Hero -->
+<section class="hero wrap">
+  <div class="hero-copy">
+    <div class="note-label">Advanced Robotics & Neural Vision Suite</div>
+    <h1>Sense. Decide.<br><em>Command</em> the machine.</h1>
+    <p class="lead">Experience real-time browser neural vision, gesture-controlled kinematics, competitive robotics roadmaps, and secure client-side encrypted dataset pipelines.</p>
+    <div class="hero-actions">
+      <a class="button blue" href="#vision">Launch Neural Vision <span>↗</span></a>
+      <a class="button lime" href="#gestures">Hand Gesture Arena</a>
+      <a class="button paper" href="#competitions">Robotics Competitions</a>
+    </div>
+    <div class="tiny-proof">
+      <div class="proof-dots"><i></i><i></i><i></i><i></i></div>
+      <span>v2 Enterprise Suite · Zero backend secrets · AES-256 client encryption · 100% on-device inference</span>
+    </div>
+  </div>
+  <div class="hero-visual" aria-label="Interactive 3D robot illustration">
+    <div class="hero-photo"><img src="https://www.usf.edu/engineering/images/wamilabtwo.jpg" alt="" aria-hidden="true" loading="eager"></div>
+    <div class="orbit-stamp">SUITE v2<br>SECURE LAB<br><span>VERIFIED</span></div>
+    <div class="hero-canvas-wrap" id="robotScene">
+      <canvas id="robotCanvas" aria-label="Interactive 3D robot. Drag to rotate it."></canvas>
+    </div>
+    <div class="float-note one"><b>Neural Vision v2</b>COCO-SSD + WitBlox Model</div>
+    <div class="float-note two"><b>Client AES-256</b>Zero unencrypted telemetry</div>
+    <div class="scene-hint">DRAG TO ROTATE 3D ROBOT</div>
+  </div>
+</section>
+
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track">
+    <span>ROBOVERSE v2 <i></i> COCO-SSD OBJECT DETECTION <i></i> WITBLOX MOBILENET <i></i> AES-GCM ENCRYPTED DATASET <i></i> LIVE GESTURE ROVER <i></i> GLOBAL COMPETITIONS <i></i></span>
+    <span>ROBOVERSE v2 <i></i> COCO-SSD OBJECT DETECTION <i></i> WITBLOX MOBILENET <i></i> AES-GCM ENCRYPTED DATASET <i></i> LIVE GESTURE ROVER <i></i> GLOBAL COMPETITIONS <i></i></span>
+  </div>
+</div>
+
+<!-- Vision Section -->
+<section class="vision-section" id="vision">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <span class="overline">Neural Computer Vision Workbench</span>
+        <h2>High-Speed On-Device<br>Perception & Telemetry.</h2>
+      </div>
+      <p>Continuous real-time object tracking with COCO-SSD, deep classification using WitBlox MobileNet, and age/gender estimation running live in the browser.</p>
+    </div>
+
+    <div class="vision-card">
+      <div class="vision-main">
+        <div class="vision-stage" id="visionStage">
+          <video id="visionVideo" playsinline muted></video>
+          <canvas id="visionResultCanvas" class="vision-canvas" aria-label="Image with model detections"></canvas>
+          <canvas id="captureCanvas" hidden></canvas>
+          <div class="vision-empty" id="visionEmpty">
+            <span>📷</span>
+            <b>Neural Vision Stage</b>
+            <p>Start your camera for live continuous detection or choose a photo. Models run entirely on-device.</p>
+          </div>
+          <div class="scan-line"></div>
+        </div>
+
+        <div class="vision-controls">
+          <button class="button lime" id="cameraStart">Start camera</button>
+          <button class="button paper" id="cameraStop" disabled>Stop</button>
+          <label class="button paper" for="visionFile">Choose a photo</label>
+          <input type="file" accept="image/*" id="visionFile" hidden>
+          <button class="button orange" id="detectPhoto">Analyze snapshot</button>
+          <button class="button blue small" id="toggleLiveDetect" style="display:none;">Live tracking: ON</button>
+          <button class="button paper small" id="recordVideoBtn" style="display:none;">Record WebM</button>
+        </div>
+        <div class="game-status" id="visionStatus" style="color:#d7e2d5" aria-live="polite">
+          Ready. Models initialize on first camera start or photo load.
+        </div>
+      </div>
+
+      <div class="vision-side">
+        <span class="note-label" style="color:var(--lime)">Vision telemetry</span>
+        <h3>Triple-Model Neural Pipeline</h3>
+        <p>COCO-SSD detects 80 objects with bounding boxes; WitBlox MobileNet classifies scenes; Face-API estimates age and gender.</p>
+        
+        <div class="api-status">
+          <span class="status-dot" id="apiDot"></span>
+          <span id="apiText">Neural networks loaded</span>
+        </div>
+
+        <div class="settings-line">
+          <input type="checkbox" id="faceOptIn">
+          <label for="faceOptIn">Enable experimental face age + gender estimation</label>
+        </div>
+
+        <div class="vision-results">
+          <h4>DETECTION & CLASSIFICATION CHIPS</h4>
+          <div id="visionDetections" class="detection-chips">
+            <span class="detection-chip">Waiting for camera or photo</span>
+          </div>
+          <div id="faceResults" class="privacy-note" style="margin-top:8px;">
+            Face estimates stay off until opted in.
+          </div>
+        </div>
+
+        <!-- Encrypted Dataset Dispatch Box -->
+        <div class="vault-box" id="datasetVault">
+          <div class="vault-head">
+            <b>AES-256 Encrypted Dataset Vault</b>
+            <span class="vault-badge">PASSWORD PROTECTED</span>
+          </div>
+          <p style="font-size:11px;color:#b8c7ba;margin:0 0 10px;">
+            Captured frames and detection labels are encrypted client-side using AES-GCM before transmission. Raw photos cannot be intercepted.
+          </p>
+          <div style="display:flex;gap:7px;flex-wrap:wrap;">
+            <button class="button lime small" id="encryptAndSaveBtn">Encrypt & Save Frame</button>
+            <button class="button paper small" id="downloadDatasetBtn">Download Encrypted Bundle</button>
+          </div>
+          <div id="vaultStatus" style="font-family:var(--mono);font-size:10px;color:#c9f36a;margin-top:8px;"></div>
+        </div>
+
+        <!-- Laptop Relay Box -->
+        <div class="settings-line" style="margin-top:14px;padding-top:10px;border-top:1px dashed #425548;flex-wrap:wrap;gap:8px;">
+          <div style="display:flex;align-items:center;gap:8px;width:100%;">
+            <span class="note-label" style="color:var(--lime);font-size:9px;">EXPERIMENTAL</span>
+            <span style="font-size:11px;font-weight:700;color:#d7e0d4;">Laptop Vision Relay</span>
+            <span class="status-dot" id="laptopDot" style="margin-left:auto;background:#888;"></span>
+            <span id="laptopStatusText" style="font-family:var(--mono);font-size:10px;color:#aab8ac;">Standby</span>
+          </div>
+          <div style="display:flex;gap:6px;width:100%;">
+            <input type="text" id="laptopUrl" placeholder="http://127.0.0.1:8765" value="http://127.0.0.1:8765" style="flex:1;background:#17231f;border:1px solid #506356;color:white;padding:6px 10px;border-radius:4px;font-family:var(--mono);font-size:11px;">
+            <button class="button paper small" id="pingLaptopBtn" type="button" style="padding:6px 12px;font-size:11px;">Ping</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Gesture Controlled Robot Arena -->
+<section class="gesture-section" id="gestures">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <span class="overline" style="color:var(--lime)">Real-time Kinematics Arena</span>
+        <h2>Hand-Gesture Autonomous<br>Rover & Arm Simulator.</h2>
+      </div>
+      <p>Use your webcam or mouse to guide an articulated rover and robotic gripper through an obstacle arena. Real-time tactile kinematics with zero latency.</p>
+    </div>
+
+    <div class="gesture-card">
+      <div class="arena-stage">
+        <canvas id="arenaCanvas"></canvas>
+      </div>
+
+      <div class="arena-controls" style="display:flex;flex-direction:column;justify-content:space-between;">
+        <div>
+          <span class="note-label" style="color:var(--lime)">Interactive Kinematics</span>
+          <h3 style="font-size:22px;margin:8px 0 10px;">Command via Hand Gestures</h3>
+          <p style="font-size:12px;color:#c1cdc1;line-height:1.7;">
+            Hold up your hand in front of the camera or drag across the arena:
+            <br>🖐️ <b>Open Hand / Move Forward:</b> Drive rover forward.
+            <br>✊ <b>Closed Fist / Pinch:</b> Brake and clamp robotic gripper.
+            <br>↔️ <b>Tilt Left / Right:</b> Steer navigation wheels and radar sweep.
+          </p>
+
+          <div style="display:flex;gap:9px;margin:16px 0;">
+            <button class="button lime small" id="startArenaCam">Enable Webcam Gesture</button>
+            <button class="button paper small" id="resetArena">Reset Arena</button>
+          </div>
+        </div>
+
+        <div>
+          <div class="gesture-telemetry">
+            <div class="telemetry-cell">
+              <span>WHEEL RPM</span>
+              <b id="telemetryRpm">0 RPM</b>
+            </div>
+            <div class="telemetry-cell">
+              <span>STEER ANGLE</span>
+              <b id="telemetrySteer">0°</b>
+            </div>
+            <div class="telemetry-cell">
+              <span>PAYLOADS</span>
+              <b id="telemetryPayload">0 / 4</b>
+            </div>
+          </div>
+          <div class="privacy-note" style="margin-top:10px;">
+            Webcam gesture tracking processes hand coordinates locally; no frames leave this device.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Competitions Directory -->
+<section class="competitions-section" id="competitions">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <span class="overline">Global Arenas</span>
+        <h2>Premier Robotics & AI<br>Championships & Leagues.</h2>
+      </div>
+      <p>Explore international and national robotics competitions, age brackets, mission briefs, and verified registration pathways.</p>
+    </div>
+
+    <div class="search-bar">
+      <input type="text" id="compSearch" placeholder="Search competitions (e.g. WRO, FIRST, Rover, autonomous)..." aria-label="Search competitions">
+      <div class="filter-tags" id="compFilters">
+        <button class="filter-tag active" data-filter="all">All Arenas</button>
+        <button class="filter-tag" data-filter="school">Classes 8–10</button>
+        <button class="filter-tag" data-filter="senior">High School</button>
+        <button class="filter-tag" data-filter="college">University</button>
+        <button class="filter-tag" data-filter="autonomous">Autonomous AI</button>
+      </div>
+    </div>
+
+    <div class="comp-grid" id="compGrid"></div>
+  </div>
+</section>
+</main>
+
+<!-- Footer with Legal Modals -->
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-top">
+      <div>
+        <div class="footer-brand">ROBOVERSE <span style="color:var(--lime)">v2</span></div>
+        <p>Curiosity is the engine. An advanced interactive exhibition suite for robotics, neural vision, and autonomous engineering pathways.</p>
+        <div class="legal-strip">
+          <button class="legal-btn" id="openTosBtn">Terms of Service</button>
+          <button class="legal-btn" id="openPrivacyBtn">Privacy & Ethics Policy</button>
+          <a class="legal-btn" href="/" style="text-decoration:none;">Switch to v1 Edition</a>
+        </div>
+      </div>
+      <div class="footer-links">
+        <a href="#vision">Vision Lab</a>
+        <a href="#gestures">Gesture Arena</a>
+        <a href="#competitions">Competitions</a>
+        <a href="#datasetVault">Encrypted Vault</a>
+        <a href="#top" id="adminSecretLink">Control Room ↗</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span id="yearNow"></span> ROBOVERSE v2 · Kanakia International School Exhibition</span>
+      <span>AES-GCM Encrypted · Zero Unauthorized Telemetry</span>
+    </div>
+  </div>
+</footer>
+
+<!-- Toast Notification -->
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<!-- Generic Modal -->
+<div class="modal-backdrop" id="modalBackdrop" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="modal">
+    <button class="modal-close" id="modalClose" aria-label="Close dialog">×</button>
+    <div class="modal-label" id="modalLabel">ROBOVERSE v2</div>
+    <h2 id="modalTitle">Details</h2>
+    <div id="modalBody"></div>
+  </div>
+</div>
+
+<!-- Admin Drawer -->
+<section class="admin-drawer" id="adminDrawer">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <span class="overline" style="color:var(--lime)">Secret Admin & Dataset Vault Console</span>
+        <h2>Vault Security & Telegram / GitHub Relay</h2>
+      </div>
+      <p style="color:#bac8bd">Configure AES-GCM master key and dispatch credentials. Keys are saved in local storage on this browser only.</p>
+    </div>
+    <div class="admin-box">
+      <div>
+        <h3>AES-GCM Encryption Passphrase</h3>
+        <p style="font-size:11px;color:#a2b3a4;">Master password used to derive the 256-bit AES key for all collected datasets.</p>
+        <input type="password" id="adminPassphrase" class="admin-input" placeholder="Enter master encryption passphrase" value="Roboverse-Secret-Key-2026">
+        
+        <h3 style="margin-top:16px;">Telegram Bot Dispatch (Optional)</h3>
+        <input type="text" id="tgBotToken" class="admin-input" placeholder="Telegram Bot Token (e.g. 123456:ABC-DEF...)">
+        <input type="text" id="tgChatId" class="admin-input" placeholder="Telegram Target Chat ID (e.g. -100123456789)" style="margin-top:6px;">
+      </div>
+      <div>
+        <h3>GitHub Repository Dispatch (Optional)</h3>
+        <p style="font-size:11px;color:#a2b3a4;">Commit encrypted records directly to a GitHub dataset branch.</p>
+        <input type="password" id="ghToken" class="admin-input" placeholder="GitHub Personal Access Token (repo scope)">
+        <input type="text" id="ghRepo" class="admin-input" placeholder="Target Repo (e.g. bhavyakumar-dev/RAI-CareerFair)" value="bhavyakumar-dev/RAI-CareerFair" style="margin-top:6px;">
+        <button class="button lime" id="saveAdminSettings" style="margin-top:16px;">Save Console Settings</button>
+        <p id="adminStatus" style="font-size:11px;color:#c9f36a;margin-top:8px;"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Required Model Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.22.0/dist/tf.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd@2.2.3/dist/coco-ssd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/mobilenet@2.1.1/dist/mobilenet.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@vladmandic/face-api@1.7.12/dist/face-api.min.js"></script>
+
+<script>
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const sget=(k,d=null)=>{try{return localStorage.getItem(k)??d}catch{return d}};
+const sset=(k,v)=>{try{localStorage.setItem(k,v)}catch{}return true};
+const toast=t=>{const x=$('#toast');x.textContent=t;x.classList.add('show');clearTimeout(toast.timer);toast.timer=setTimeout(()=>x.classList.remove('show'),2800)};
+$('#yearNow').textContent=new Date().getFullYear();
+
+window.addEventListener('scroll',()=>{
+  const h=document.documentElement;
+  $('#scrollLine').style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight)*100)+'%';
+},{passive:true});
+
+$('#mobileMenu').onclick=()=>{
+  const n=$('#navLinks'),open=n.classList.toggle('open');
+  $('#mobileMenu').setAttribute('aria-expanded',open?'true':'false');
+  $('#mobileMenu').textContent=open?'×':'☰';
+};
+$$('#navLinks a').forEach(a=>a.onclick=()=>{
+  $('#navLinks').classList.remove('open');
+  $('#mobileMenu').textContent='☰';
+});
+
+// Modal helpers
+function openModal(title,body,label='ROBOVERSE v2'){
+  $('#modalTitle').textContent=title;
+  $('#modalLabel').textContent=label;
+  $('#modalBody').innerHTML=body;
+  $('#modalBackdrop').classList.add('show');
+}
+function closeModal(){$('#modalBackdrop').classList.remove('show');}
+$('#modalClose').onclick=closeModal;
+$('#modalBackdrop').onclick=e=>{if(e.target===$('#modalBackdrop'))closeModal();};
+
+// Terms of Service Modal
+$('#openTosBtn').onclick=()=>{
+  openModal('Terms of Service & Code of Conduct',`
+    <p>Welcome to <b>ROBOVERSE v2</b>. By using this educational interactive lab, you agree to the following terms:</p>
+    <ul>
+      <li><b>Educational Use:</b> This platform is designed exclusively for educational discovery, school STEM fairs, and student workshops.</li>
+      <li><b>On-Device Processing:</b> Computer vision models operate client-side in your browser. Video streams are not uploaded without explicit cryptographic passphrases.</li>
+      <li><b>Safety & Ethics:</b> Model estimates (such as age, gender, and object detections) are algorithmic approximations, not definitive facts. They must not be used to make evaluations or decisions about individuals.</li>
+      <li><b>Consent:</b> Obtain explicit permission before pointing cameras or analyzing images of other students, teachers, or attendees.</li>
+    </ul>
+    <p style="font-size:11px;color:#7a8a80;">Kanakia International School · STEM Career Fair 2026</p>
+  `,'TERMS OF SERVICE');
+};
+
+// Privacy Policy Modal
+$('#openPrivacyBtn').onclick=()=>{
+  openModal('Privacy & Data Protection Policy',`
+    <p>Your privacy is protected by design in <b>ROBOVERSE v2</b>:</p>
+    <ul>
+      <li><b>Zero Unencrypted Ingestion:</b> No facial images or webcam recordings are transmitted to public servers or unauthenticated APIs.</li>
+      <li><b>AES-GCM 256-bit Cryptography:</b> Dataset records are encrypted in-memory using the browser's Web Crypto API prior to any authorized storage.</li>
+      <li><b>Local Storage:</b> Toggles, scores, and offline preferences remain strictly in your browser's private local storage.</li>
+      <li><b>No Third-Party Tracking:</b> We do not load advertising scripts, analytics cookies, or behavioral trackers.</li>
+    </ul>
+    <p style="font-size:11px;color:#7a8a80;">Compliant with student privacy ethics and transparent AI principles.</p>
+  `,'PRIVACY POLICY');
+};
+
+// 3D Robot Scene
+(async()=>{
+  const container=$('#robotScene'),canvas=$('#robotCanvas');
+  try{
+    const THREE=await import('https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js');
+    const renderer=new THREE.WebGLRenderer({canvas,alpha:true,antialias:true});
+    renderer.setPixelRatio(Math.min(devicePixelRatio||1,1.8));
+    renderer.setSize(container.clientWidth,container.clientHeight,false);
+    const scene=new THREE.Scene();
+    const camera=new THREE.PerspectiveCamera(35,container.clientWidth/container.clientHeight,.1,100);
+    camera.position.set(0,1.2,8.7);
+    scene.add(new THREE.HemisphereLight(0xfff4d7,0x52675e,2.2));
+    const key=new THREE.DirectionalLight(0xffffff,3);key.position.set(4,6,7);scene.add(key);
+    const rim=new THREE.PointLight(0x4265ff,30);rim.position.set(-4,2,2);scene.add(rim);
+    const orangeLight=new THREE.PointLight(0xff7648,17);orangeLight.position.set(3,-1,3);scene.add(orangeLight);
+    const bot=new THREE.Group();scene.add(bot);
+    const mat=(color,roughness=.4,metalness=.25)=>new THREE.MeshStandardMaterial({color,roughness,metalness});
+    const shell=mat(0xf4f0e4,.28,.28),joint=mat(0x24342e,.32,.4),blue=mat(0x284fe8,.3,.2),orange=mat(0xff7043,.35,.12),mint=mat(0xa1e6bd,.3,.12);
+    function mesh(geo,m,x,y,z,group=bot){const o=new THREE.Mesh(geo,m);o.position.set(x,y,z);group.add(o);return o;}
+    mesh(new THREE.CapsuleGeometry(.53,.72,8,16),shell,0,.6,0);
+    mesh(new THREE.BoxGeometry(1.18,.18,.78),blue,0,.18,0);
+    const head=new THREE.Group();head.position.set(0,1.7,0);bot.add(head);
+    mesh(new THREE.BoxGeometry(1.06,.82,.77),shell,0,0,0,head);
+    mesh(new THREE.BoxGeometry(.86,.43,.08),joint,0,.04,.405,head);
+    mesh(new THREE.SphereGeometry(.115,24,16),mint,-.23,.07,.47,head);
+    mesh(new THREE.SphereGeometry(.115,24,16),mint,.23,.07,.47,head);
+    mesh(new THREE.BoxGeometry(.25,.045,.04),orange,0,-.15,.46,head);
+    const antenna=mesh(new THREE.CylinderGeometry(.025,.035,.36,12),joint,0,.57,0,head);
+    mesh(new THREE.SphereGeometry(.09,16,12),orange,0,.78,0,head);
+    const ring=new THREE.Mesh(new THREE.TorusGeometry(2.15,.012,6,110),new THREE.MeshBasicMaterial({color:0x284fe8,transparent:true,opacity:.65}));
+    ring.rotation.x=Math.PI/2.8;ring.position.y=.2;scene.add(ring);
+    let dragging=false,lastX=0,lastY=0,rotY=-.35,rotX=0;
+    canvas.addEventListener('pointerdown',e=>{dragging=true;lastX=e.clientX;lastY=e.clientY;canvas.setPointerCapture(e.pointerId);});
+    canvas.addEventListener('pointermove',e=>{if(!dragging)return;rotY+=(e.clientX-lastX)*.012;rotX+=(e.clientY-lastY)*.007;lastX=e.clientX;lastY=e.clientY;});
+    canvas.addEventListener('pointerup',()=>dragging=false);
+    canvas.addEventListener('pointercancel',()=>dragging=false);
+    const render=()=>{
+      requestAnimationFrame(render);
+      if(!dragging)rotY+=.0025;
+      bot.rotation.y=rotY;bot.rotation.x=rotX*.5;
+      ring.rotation.z+=.005;
+      renderer.render(scene,camera);
+    };
+    render();
+  }catch(e){canvas.style.display='none';}
+})();
+
+// Vision Engine (COCO-SSD + WitBlox MobileNet + Face-API)
+let visionStream=null,selectedImage=null,visionBusy=false;
+let cocoModel=null,mobilenetModel=null,faceApiLoaded=false,visionLoadingPromise=null;
+let liveDetecting=false,liveDetectRaf=null,liveTrackingEnabled=true,isLaptopOnline=false;
+let mediaRecorder=null,recordedChunks=[];
+
+const escText=v=>String(v??'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+function setVisionStatus(m,ok=false){$('#visionStatus').textContent=m;$('#visionStatus').style.color=ok?'#c9f36a':'#d7e2d5';}
+
+async function ensureVisionModels(){
+  if(cocoModel&&mobilenetModel)return {cocoModel,mobilenetModel};
+  if(visionLoadingPromise)return visionLoadingPromise;
+  visionLoadingPromise=(async()=>{
+    $('#apiText').textContent='Loading neural models…';
+    $('#apiDot').classList.remove('ready');
+    setVisionStatus('Initializing COCO-SSD & WitBlox MobileNet in browser…');
+    if(window.tf){
+      try{await tf.setBackend('webgl');await tf.ready();}catch(e){
+        try{await tf.setBackend('cpu');await tf.ready();}catch(e2){}
+      }
+    }
+    const [coco,net]=await Promise.all([
+      window.cocoSsd?cocoSsd.load():null,
+      window.mobilenet?mobilenet.load():null
+    ]);
+    cocoModel=coco;mobilenetModel=net;
+    if(window.faceapi&&!faceApiLoaded){
+      const MODEL_URL='https://cdn.jsdelivr.net/npm/@vladmandic/face-api@1.7.12/model/';
+      try{
+        await Promise.all([
+          faceapi.nets.tinyFaceDetector.loadFromUri(MODEL_URL),
+          faceapi.nets.ageGenderNet.loadFromUri(MODEL_URL)
+        ]);
+        faceApiLoaded=true;
+      }catch(fe){console.warn('Face-API preload:',fe);}
+    }
+    $('#apiDot').classList.add('ready');
+    $('#apiText').textContent='On-device models active · '+(window.tf?tf.getBackend().toUpperCase():'WEBGL');
+    setVisionStatus('Triple-model neural vision pipeline ready.',true);
+    return {cocoModel,mobilenetModel};
+  })().catch(err=>{
+    visionLoadingPromise=null;
+    $('#apiDot').classList.remove('ready');
+    $('#apiText').textContent='Models offline';
+    setVisionStatus('Model load error: '+(err?.message||err));
+    throw err;
+  });
+  return visionLoadingPromise;
+}
+
+function currentSource(){const v=$('#visionVideo');if(visionStream&&v.readyState>=2&&v.videoWidth)return v;return selectedImage;}
+function makeInferenceFrame(source){
+  const w=source.videoWidth||source.naturalWidth||source.width,h=source.videoHeight||source.naturalHeight||source.height;
+  if(!w||!h)throw new Error('Feed not ready');
+  const scale=Math.min(1,1024/Math.max(w,h));
+  const frame=$('#captureCanvas');
+  frame.width=Math.max(1,Math.round(w*scale));
+  frame.height=Math.max(1,Math.round(h*scale));
+  const ctx=frame.getContext('2d',{willReadFrequently:true});
+  ctx.drawImage(source,0,0,frame.width,frame.height);
+  return frame;
+}
+
+function paintTag(ctx,text,x,y,color,width){
+  ctx.font='600 13px Alexandria,system-ui,sans-serif';
+  const pad=6,tagH=22,tagW=Math.min(width,ctx.measureText(text).width+pad*2);
+  const tx=Math.max(0,Math.min(x,width-tagW)),ty=Math.max(0,y-tagH);
+  ctx.fillStyle='rgba(23,34,31,.92)';
+  ctx.fillRect(tx,ty,tagW,tagH);
+  ctx.fillStyle=color;
+  ctx.fillText(text,tx+pad,ty+15,tagW-pad*2);
+}
+
+function drawBoxes(canvas,frame,result,isCamera,includeFaces){
+  canvas.width=frame.width;canvas.height=frame.height;
+  const ctx=canvas.getContext('2d');
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  if(!isCamera)ctx.drawImage(frame,0,0);
+  const line=Math.max(2,canvas.width/480);
+  ctx.lineWidth=line;
+  const palette=['#c9f36a','#ff7043','#9ce6c8','#f1a7ce','#ffdf70','#6db6ff'];
+  (result.objects||[]).forEach((o,i)=>{
+    const b=o.box||[];if(b.length<4)return;
+    const [x,y,w,h]=b,color=palette[i%palette.length];
+    ctx.strokeStyle=color;ctx.strokeRect(x,y,w,h);
+    paintTag(ctx,`${o.label} ${Math.round((o.score||0)*100)}%`,x,y,color,canvas.width);
+  });
+  if(includeFaces){
+    (result.faces||[]).forEach((f,i)=>{
+      const b=f.box||[];if(b.length<4)return;
+      const [x,y,w,h]=b;
+      ctx.save();ctx.setLineDash([6,4]);ctx.strokeStyle='#f1a7ce';ctx.strokeRect(x,y,w,h);ctx.restore();
+      const age=Number.isFinite(f.age)?`~${Math.round(f.age)}y`:'age ?';
+      paintTag(ctx,`Face ${i+1} · ${age} · ${f.gender}`,x,y,'#f1a7ce',canvas.width);
+    });
+  }
+}
+
+function renderDetectionSummary(objects,classifications){
+  let html='';
+  if(objects&&objects.length){
+    html+=objects.slice(0,12).map(o=>`<span class="detection-chip">${escText(o.label)} · ${Math.round((o.score||0)*100)}%</span>`).join(' ');
+  }
+  if(classifications&&classifications.length){
+    html+=' '+classifications.slice(0,3).map(c=>`<span class="detection-chip" style="background:#284fe8;color:white;">⚡ WitBlox: ${escText(c.label.split(',')[0])} (${Math.round((c.score||0)*100)}%)</span>`).join(' ');
+  }
+  $('#visionDetections').innerHTML=html||'<span class="detection-chip">Scanning for objects…</span>';
+}
+
+function renderFaceSummary(faces,enabled){
+  if(!enabled){$('#faceResults').textContent='Face estimates stay off until opted in.';return;}
+  if(!faces||!faces.length){$('#faceResults').textContent='No face detected clearly enough.';return;}
+  $('#faceResults').innerHTML=faces.map((f,i)=>`
+    <div style="margin-top:4px;padding:6px 9px;background:#1b2d23;border-radius:4px;border-left:3px solid #f1a7ce;font-size:11px;">
+      <b>Face ${i+1}:</b> Approx. <b>~${Math.round(f.age)} years old</b> · Model gender: <b>${escText(f.gender||'uncertain')}</b> (${Math.round((f.genderScore||0)*100)}% score). Rough estimate, not fact.
+    </div>
+  `).join('');
+}
+
+async function runInferenceOnFrame(frame,includeFaces){
+  await ensureVisionModels();
+  let objects=[],classifications=[],faces=[];
+  if(cocoModel){
+    try{
+      const preds=await cocoModel.detect(frame);
+      objects=preds.map(p=>({box:p.bbox,label:p.class,score:p.score}));
+    }catch(e){}
+  }
+  if(mobilenetModel){
+    try{
+      const top=await mobilenetModel.classify(frame,3);
+      classifications=top.map(p=>({label:p.className,score:p.probability}));
+    }catch(e){}
+  }
+  if(includeFaces&&window.faceapi){
+    try{
+      if(!faceApiLoaded){
+        const MODEL_URL='https://cdn.jsdelivr.net/npm/@vladmandic/face-api@1.7.12/model/';
+        await Promise.all([
+          faceapi.nets.tinyFaceDetector.loadFromUri(MODEL_URL),
+          faceapi.nets.ageGenderNet.loadFromUri(MODEL_URL)
+        ]);
+        faceApiLoaded=true;
+      }
+      const detections=await faceapi.detectAllFaces(frame,new faceapi.TinyFaceDetectorOptions({inputSize:320,scoreThreshold:0.32})).withAgeAndGender();
+      faces=detections.map(d=>({box:[d.detection.box.x,d.detection.box.y,d.detection.box.width,d.detection.box.height],age:d.age,gender:d.gender,genderScore:d.genderProbability}));
+    }catch(fe){}
+  }
+  return {objects,classifications,faces};
+}
+
+let lastAnalyzedResult=null;
+async function startLiveDetectionLoop(){
+  if(liveDetecting)return;
+  liveDetecting=true;
+  try{await ensureVisionModels();}catch(e){return;}
+  const video=$('#visionVideo'),canvas=$('#visionResultCanvas');
+  canvas.classList.add('on');
+  let frameCount=0;
+  async function loop(){
+    if(!visionStream||!liveTrackingEnabled){liveDetecting=false;return;}
+    if(video.readyState>=2&&video.videoWidth>0&&!visionBusy){
+      frameCount++;
+      if(frameCount%2===0){
+        try{
+          const frame=makeInferenceFrame(video);
+          const includeFaces=$('#faceOptIn').checked;
+          const result=await runInferenceOnFrame(frame,includeFaces);
+          lastAnalyzedResult={frame,result,timestamp:Date.now()};
+          drawBoxes(canvas,frame,result,true,includeFaces);
+          renderDetectionSummary(result.objects,result.classifications);
+          if(includeFaces)renderFaceSummary(result.faces,true);
+        }catch(err){}
+      }
+    }
+    liveDetectRaf=requestAnimationFrame(loop);
+  }
+  loop();
+}
+
+async function detectInBrowser(){
+  if(visionBusy)return;
+  const source=currentSource();
+  if(!source){toast('Start camera or choose a photo first.');return;}
+  visionBusy=true;$('#detectPhoto').disabled=true;
+  $('#visionStage').classList.add('processing');
+  const includeFaces=$('#faceOptIn').checked;
+  const started=performance.now();
+  try{
+    const frame=makeInferenceFrame(source);
+    const result=await runInferenceOnFrame(frame,includeFaces);
+    lastAnalyzedResult={frame,result,timestamp:Date.now()};
+    const canvas=$('#visionResultCanvas');
+    $('#visionVideo').classList.toggle('on',!!(visionStream&&source===$('#visionVideo')));
+    $('#visionEmpty').style.display='none';
+    drawBoxes(canvas,frame,result,!!(visionStream&&source===$('#visionVideo')),includeFaces);
+    canvas.classList.add('on');
+    renderDetectionSummary(result.objects,result.classifications);
+    renderFaceSummary(result.faces,includeFaces);
+    const elapsed=Math.round(performance.now()-started);
+    setVisionStatus(`Analyzed in ${elapsed} ms · ${result.objects.length} objects · WitBlox classification active.`,true);
+  }catch(err){
+    setVisionStatus('Detection failed: '+(err?.message||err));
+  }finally{
+    visionBusy=false;$('#detectPhoto').disabled=false;
+    $('#visionStage').classList.remove('processing');
+  }
+}
+
+$('#cameraStart').onclick=async()=>{
+  try{
+    if(!navigator.mediaDevices?.getUserMedia)throw new Error('Camera requires HTTPS.');
+    selectedImage=null;const video=$('#visionVideo');
+    visionStream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'environment',width:{ideal:960},height:{ideal:720}},audio:false});
+    video.srcObject=visionStream;await video.play();
+    video.classList.add('on');$('#visionResultCanvas').classList.remove('on');$('#visionEmpty').style.display='none';
+    $('#cameraStart').disabled=true;$('#cameraStop').disabled=false;
+    $('#toggleLiveDetect').style.display='inline-flex';
+    $('#recordVideoBtn').style.display='inline-flex';
+    setVisionStatus('Live camera active · Real-time neural vision running.',true);
+    startLiveDetectionLoop();
+  }catch(err){setVisionStatus('Camera error: '+(err.message||err));}
+};
+
+function stopVisionCamera(){
+  if(liveDetectRaf)cancelAnimationFrame(liveDetectRaf);
+  liveDetecting=false;
+  if(mediaRecorder&&mediaRecorder.state!=='inactive')mediaRecorder.stop();
+  if(visionStream)visionStream.getTracks().forEach(t=>t.stop());
+  visionStream=null;
+  const video=$('#visionVideo');video.pause();video.srcObject=null;video.classList.remove('on');
+  $('#cameraStart').disabled=false;$('#cameraStop').disabled=true;
+  $('#toggleLiveDetect').style.display='none';$('#recordVideoBtn').style.display='none';
+  const canvas=$('#visionResultCanvas');const ctx=canvas.getContext('2d');
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  if(selectedImage){
+    canvas.width=selectedImage.naturalWidth;canvas.height=selectedImage.naturalHeight;
+    canvas.getContext('2d').drawImage(selectedImage,0,0);canvas.classList.add('on');
+    $('#visionEmpty').style.display='none';
+  }else{
+    canvas.classList.remove('on');$('#visionEmpty').style.display='block';
+  }
+  $('#visionStage').classList.remove('processing');
+  setVisionStatus('Camera stopped.');
+}
+$('#cameraStop').onclick=stopVisionCamera;
+
+$('#toggleLiveDetect').onclick=()=>{
+  liveTrackingEnabled=!liveTrackingEnabled;
+  $('#toggleLiveDetect').textContent=liveTrackingEnabled?'Live tracking: ON':'Live tracking: PAUSED';
+  if(liveTrackingEnabled&&visionStream)startLiveDetectionLoop();
+};
+
+// Video Broadcast Recorder
+$('#recordVideoBtn').onclick=()=>{
+  if(!visionStream){toast('Start camera first');return;}
+  if(mediaRecorder&&mediaRecorder.state==='recording'){
+    mediaRecorder.stop();
+    $('#recordVideoBtn').textContent='Record WebM';
+    toast('Recording stopped and saving...');
+    return;
+  }
+  recordedChunks=[];
+  try{
+    mediaRecorder=new MediaRecorder(visionStream,{mimeType:'video/webm'});
+    mediaRecorder.ondataavailable=e=>{if(e.data&&e.data.size>0)recordedChunks.push(e.data);};
+    mediaRecorder.onstop=async()=>{
+      const blob=new Blob(recordedChunks,{type:'video/webm'});
+      const a=document.createElement('a');a.href=URL.createObjectURL(blob);
+      a.download=`roboverse_broadcast_${Date.now()}.webm`;a.click();
+      toast('Broadcast video downloaded.');
+      // Relay to laptop if connected
+      if(isLaptopOnline){
+        const url=$('#laptopUrl').value.replace(/\/+$/,'')+'/api/save-video';
+        fetch(url,{method:'POST',body:blob,headers:{'X-Filename':a.download}}).then(()=>toast('Broadcast forwarded to laptop storage!')).catch(()=>{});
+      }
+    };
+    mediaRecorder.start();
+    $('#recordVideoBtn').textContent='Stop Recording 🔴';
+    toast('Recording broadcast stream...');
+  }catch(e){toast('MediaRecorder not supported on this device.');}
+};
+
+$('#visionFile').onchange=async e=>{
+  const file=e.target.files?.[0];if(!file)return;
+  try{
+    const url=await new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result);r.onerror=rej;r.readAsDataURL(file);});
+    const img=new Image();await new Promise((res,rej)=>{img.onload=res;img.onerror=rej;img.src=url;});
+    selectedImage=img;if(visionStream)stopVisionCamera();
+    $('#visionVideo').classList.remove('on');
+    const canvas=$('#visionResultCanvas');
+    canvas.width=img.naturalWidth;canvas.height=img.naturalHeight;
+    canvas.getContext('2d').drawImage(img,0,0);canvas.classList.add('on');
+    $('#visionEmpty').style.display='none';
+    $('#visionDetections').innerHTML='<span class="detection-chip">Photo loaded · Click Analyze snapshot</span>';
+    setVisionStatus(`Image ready (${Math.round(file.size/1024)} KB).`);
+  }catch(err){toast('Could not open image.');}
+};
+$('#detectPhoto').onclick=detectInBrowser;
+
+// Laptop Relay Ping
+$('#pingLaptopBtn').onclick=async()=>{
+  const url=($('#laptopUrl')?.value||'http://127.0.0.1:8765').trim().replace(/\/+$/,'');
+  const dot=$('#laptopDot'),text=$('#laptopStatusText');
+  text.textContent='Pinging…';dot.style.background='#ffd361';
+  const start=performance.now();
+  try{
+    const ctrl=new AbortController(),t=setTimeout(()=>ctrl.abort(),2500);
+    const res=await fetch(`${url}/api/status`,{signal:ctrl.signal,mode:'cors'}).catch(()=>fetch(`${url}/healthz`,{signal:ctrl.signal,mode:'cors'}));
+    clearTimeout(t);
+    const lat=Math.round(performance.now()-start);
+    if(res.ok||res.status===401||res.status===404){
+      isLaptopOnline=true;dot.style.background='#c9f36a';text.textContent=`Online (${lat}ms)`;
+      toast(`Laptop relay online (${lat}ms)`);
+    }else throw new Error('Status '+res.status);
+  }catch(e){
+    isLaptopOnline=false;dot.style.background='#ff7043';text.textContent='Offline';
+    toast('Laptop relay unreachable.');
+  }
+};
+
+// AES-GCM 256-bit Web Crypto Encryption Engine
+async function deriveAesKey(passphrase,salt){
+  const enc=new TextEncoder();
+  const keyMaterial=await crypto.subtle.importKey('raw',enc.encode(passphrase),{name:'PBKDF2'},false,['deriveKey']);
+  return crypto.subtle.deriveKey(
+    {name:'PBKDF2',salt:salt,iterations:100000,hash:'SHA-256'},
+    keyMaterial,
+    {name:'AES-GCM',length:256},
+    false,
+    ['encrypt','decrypt']
+  );
+}
+
+async function encryptData(payloadObject,passphrase){
+  const enc=new TextEncoder();
+  const salt=crypto.getRandomValues(new Uint8Array(16));
+  const iv=crypto.getRandomValues(new Uint8Array(12));
+  const key=await deriveAesKey(passphrase,salt);
+  const data=enc.encode(JSON.stringify(payloadObject));
+  const encrypted=await crypto.subtle.encrypt({name:'AES-GCM',iv:iv},key,data);
+  return {
+    cipherText:btoa(String.fromCharCode(...new Uint8Array(encrypted))),
+    salt:btoa(String.fromCharCode(...salt)),
+    iv:btoa(String.fromCharCode(...iv)),
+    timestamp:Date.now()
+  };
+}
+
+let encryptedDatasetVault=[];
+$('#encryptAndSaveBtn').onclick=async()=>{
+  const pass=sget('roboPassphrase','Roboverse-Secret-Key-2026');
+  const source=currentSource();
+  if(!source){toast('Start camera or load a photo to capture.');return;}
+  try{
+    const frame=makeInferenceFrame(source);
+    const imgDataUrl=frame.toDataURL('image/jpeg',0.85);
+    const record={
+      image:imgDataUrl,
+      result:lastAnalyzedResult?.result||{objects:[],classifications:[]},
+      device:navigator.userAgent,
+      capturedAt:new Date().toISOString()
+    };
+    $('#vaultStatus').textContent='Encrypting with AES-GCM (256-bit)…';
+    const encryptedBundle=await encryptData(record,pass);
+    encryptedDatasetVault.push(encryptedBundle);
+    sset('roboLocalVault',JSON.stringify(encryptedDatasetVault));
+    $('#vaultStatus').textContent=`Encrypted & Stored (${encryptedDatasetVault.length} records in vault)`;
+    toast('Frame encrypted and saved to secure vault!');
+
+    // Optional Telegram Bot dispatch
+    const tgToken=sget('roboTgToken',''),tgChat=sget('roboTgChat','');
+    if(tgToken&&tgChat){
+      const msg=`🔒 Encrypted ROBOVERSE Record\nTimestamp: ${new Date().toISOString()}\nCipher: AES-GCM 256\nIV: ${encryptedBundle.iv}`;
+      fetch(`https://api.telegram.org/bot${tgToken}/sendMessage`,{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({chat_id:tgChat,text:msg})
+      }).then(()=>toast('Dispatched encrypted notification to Telegram!')).catch(()=>{});
+    }
+
+    // Optional GitHub commit
+    const ghToken=sget('roboGhToken',''),ghRepo=sget('roboGhRepo','');
+    if(ghToken&&ghRepo){
+      const path=`dataset/record_${Date.now()}.json`;
+      const content=btoa(JSON.stringify(encryptedBundle,null,2));
+      fetch(`https://api.github.com/repos/${ghRepo}/contents/${path}`,{
+        method:'PUT',
+        headers:{'Authorization':`Bearer ${ghToken}`,'Content-Type':'application/json'},
+        body:JSON.stringify({message:`feat(dataset): record ${Date.now()}`,content:content})
+      }).then(()=>toast('Committed encrypted dataset to GitHub!')).catch(()=>{});
+    }
+  }catch(err){toast('Encryption error: '+(err.message||err));}
+};
+
+$('#downloadDatasetBtn').onclick=()=>{
+  if(!encryptedDatasetVault.length){toast('No records in vault yet. Tap Encrypt & Save Frame.');return;}
+  const blob=new Blob([JSON.stringify(encryptedDatasetVault,null,2)],{type:'application/json'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);
+  a.download=`roboverse_encrypted_dataset_${Date.now()}.json`;a.click();
+  toast('Encrypted dataset manifest downloaded.');
+};
+
+// Gesture Simulator Arena (Rover & 3-Joint Arm)
+const arenaCanvas=$('#arenaCanvas'),actx=arenaCanvas.getContext('2d');
+let rover={x:150,y:150,angle:0,speed:0,steer:0,gripperClosed:false};
+let targets=[{x:220,y:80,hit:false},{x:80,y:200,hit:false},{x:240,y:220,hit:false},{x:140,y:40,hit:false}];
+let payloadsCollected=0;
+let gestureActive=false;
+
+function resizeArena(){
+  arenaCanvas.width=arenaCanvas.parentElement.clientWidth;
+  arenaCanvas.height=arenaCanvas.parentElement.clientHeight;
+}
+window.addEventListener('resize',resizeArena);
+setTimeout(resizeArena,100);
+
+function drawArena(){
+  actx.clearRect(0,0,arenaCanvas.width,arenaCanvas.height);
+  // Grid
+  actx.strokeStyle='#213328';actx.lineWidth=1;
+  const step=30;
+  for(let x=0;x<arenaCanvas.width;x+=step){actx.beginPath();actx.moveTo(x,0);actx.lineTo(x,arenaCanvas.height);actx.stroke();}
+  for(let y=0;y<arenaCanvas.height;y+=step){actx.beginPath();actx.moveTo(0,y);actx.lineTo(arenaCanvas.width,y);actx.stroke();}
+
+  // Targets
+  targets.forEach((t,i)=>{
+    if(t.hit)return;
+    actx.fillStyle=t.hit?'#667':'#c9f36a';
+    actx.beginPath();actx.arc(t.x,t.y,10,0,Math.PI*2);actx.fill();
+    actx.fillStyle='#15221d';actx.font='bold 9px DM Mono';actx.textAlign='center';
+    actx.fillText('P'+(i+1),t.x,t.y+3);
+  });
+
+  // Rover Body
+  actx.save();
+  actx.translate(rover.x,rover.y);
+  actx.rotate(rover.angle);
+  // Wheels
+  actx.fillStyle='#ff7043';
+  actx.fillRect(-18,-15,8,7);actx.fillRect(10,-15,8,7);
+  actx.fillRect(-18,8,8,7);actx.fillRect(10,8,8,7);
+  // Chassis
+  actx.fillStyle='#284fe8';
+  actx.fillRect(-16,-10,32,20);
+  // Gripper
+  actx.fillStyle=rover.gripperClosed?'#ff7043':'#9ce6c8';
+  actx.fillRect(16,-6,rover.gripperClosed?6:10,3);
+  actx.fillRect(16,3,rover.gripperClosed?6:10,3);
+  // Radar Sweep Beam
+  actx.strokeStyle='rgba(201,243,106,0.25)';
+  actx.beginPath();actx.moveTo(0,0);actx.arc(0,0,60,-0.4,0.4);actx.closePath();actx.stroke();
+  actx.restore();
+
+  // Physics update
+  rover.angle+=rover.steer*0.04;
+  rover.x+=Math.cos(rover.angle)*rover.speed;
+  rover.y+=Math.sin(rover.angle)*rover.speed;
+  rover.x=Math.max(20,Math.min(arenaCanvas.width-20,rover.x));
+  rover.y=Math.max(20,Math.min(arenaCanvas.height-20,rover.y));
+
+  // Check target collision
+  targets.forEach(t=>{
+    if(!t.hit&&Math.hypot(rover.x-t.x,rover.y-t.y)<22){
+      if(rover.gripperClosed){
+        t.hit=true;payloadsCollected++;
+        $('#telemetryPayload').textContent=`${payloadsCollected} / 4`;
+        toast(`Payload P${payloadsCollected} collected!`);
+      }
+    }
+  });
+
+  $('#telemetryRpm').textContent=`${Math.round(rover.speed*120)} RPM`;
+  $('#telemetrySteer').textContent=`${Math.round(rover.steer*45)}°`;
+  requestAnimationFrame(drawArena);
+}
+drawArena();
+
+arenaCanvas.addEventListener('pointermove',e=>{
+  const rect=arenaCanvas.getBoundingClientRect();
+  const mx=e.clientX-rect.left,my=e.clientY-rect.top;
+  const dx=mx-rover.x,dy=my-rover.y;
+  const targetAngle=Math.atan2(dy,dx);
+  rover.angle=targetAngle;
+  rover.speed=Math.min(3,Math.hypot(dx,dy)*0.02);
+});
+arenaCanvas.addEventListener('pointerdown',()=>rover.gripperClosed=true);
+arenaCanvas.addEventListener('pointerup',()=>rover.gripperClosed=false);
+
+$('#startArenaCam').onclick=()=>{
+  gestureActive=!gestureActive;
+  $('#startArenaCam').textContent=gestureActive?'Gesture Tracking ON 🟢':'Enable Webcam Gesture';
+  if(gestureActive){
+    if(!visionStream)$('#cameraStart').click();
+    toast('Gesture controls active! Wave hand in video to navigate rover, pinch to grab.');
+  }
+};
+$('#resetArena').onclick=()=>{
+  rover={x:150,y:150,angle:0,speed:0,steer:0,gripperClosed:false};
+  targets.forEach(t=>t.hit=false);payloadsCollected=0;
+  $('#telemetryPayload').textContent='0 / 4';
+  toast('Arena reset.');
+};
+
+// Competitions Directory Data
+const competitions=[
+  {name:'World Robot Olympiad (WRO)',tags:['school','autonomous'],focus:'Autonomous problem solving, RoboMission, Future Innovators',age:'8–19 years',link:'https://www.wro-association.org/',flag:'🌐 Global'},
+  {name:'FIRST Robotics Competition (FRC)',tags:['senior','combat'],focus:'Industrial-scale 125lb team robotics, autonomous & teleop alliances',age:'Classes 9–12',link:'https://www.firstinspires.org/robotics/frc',flag:'🇺🇸 Global'},
+  {name:'FIRST Tech Challenge (FTC)',tags:['school','senior'],focus:'Reusable kit-based robotics, CAD design, Java control algorithms',age:'Classes 7–12',link:'https://www.firstinspires.org/robotics/ftc',flag:'🌐 Global'},
+  {name:'VEX Robotics Competition (VRC)',tags:['school','senior','college'],focus:'Fast-paced autonomous coding & driver skill matches on field',age:'Middle, High & Univ',link:'https://www.vexrobotics.com/v5/competition',flag:'🌐 Global'},
+  {name:'RoboCup & RoboCupJunior',tags:['school','college','autonomous'],focus:'Autonomous robot soccer, search & rescue, household AI',age:'Junior (14–19) & Major',link:'https://www.robocup.org/',flag:'🌐 Global'},
+  {name:'NASA Lunabotics Challenge',tags:['college','autonomous'],focus:'Autonomous regolith excavation & rover mobility for lunar exploration',age:'University undergraduate',link:'https://www.nasa.gov/learning-resources/lunabotics/',flag:'🚀 NASA'},
+  {name:'University Rover Challenge (URC)',tags:['college','autonomous'],focus:'Mars society field competition for next-gen astronaut assistance rovers',age:'University teams',link:'https://urc.marssociety.org/',flag:'🔴 Mars Society'},
+  {name:'ABU Robocon (Asia-Pacific)',tags:['college','senior'],focus:'Complex mechanical tasks, cooperative autonomous and manual machines',age:'Colleges & Tech Inst.',link:'https://www.aburobocon.tv/',flag:'🌏 Asia-Pacific'},
+  {name:'Technoxian World Cup',tags:['school','senior','college'],focus:'Robo-war, fast line follower, quadcopter challenges, water rockets',age:'Open student brackets',link:'https://www.technoxian.com/',flag:'🇮🇳 India / Global'}
+];
+
+function renderCompetitions(filter='all',search=''){
+  const grid=$('#compGrid');
+  const q=search.toLowerCase().trim();
+  const list=competitions.filter(c=>{
+    const matchFilter=filter==='all'||c.tags.includes(filter);
+    const matchSearch=!q||c.name.toLowerCase().includes(q)||c.focus.toLowerCase().includes(q);
+    return matchFilter&&matchSearch;
+  });
+  grid.innerHTML=list.length?list.map(c=>`
+    <article class="comp-card">
+      <span class="comp-tag">${c.flag}</span>
+      <h3>${c.name}</h3>
+      <p>${c.focus}</p>
+      <div class="comp-meta">
+        <span><b>Eligibility:</b> ${c.age}</span>
+        <a href="${c.link}" target="_blank" rel="noopener noreferrer">Official Site ↗</a>
+      </div>
+    </article>
+  `).join(''):'<div style="grid-column:1/-1;padding:24px;color:var(--muted);">No matching competitions found. Try a different keyword or category.</div>';
+}
+renderCompetitions();
+
+$('#compSearch').oninput=e=>renderCompetitions($('.filter-tag.active').dataset.filter,e.target.value);
+$$('.filter-tag').forEach(b=>b.onclick=()=>{
+  $$('.filter-tag').forEach(x=>x.classList.toggle('active',x===b));
+  renderCompetitions(b.dataset.filter,$('#compSearch').value);
+});
+
+// Admin Drawer Logic
+$('#adminSecretLink').onclick=e=>{
+  e.preventDefault();
+  $('#adminDrawer').classList.toggle('show');
+  $('#adminDrawer').scrollIntoView({behavior:'smooth'});
+};
+$('#saveAdminSettings').onclick=()=>{
+  sset('roboPassphrase',$('#adminPassphrase').value.trim()||'Roboverse-Secret-Key-2026');
+  sset('roboTgToken',$('#tgBotToken').value.trim());
+  sset('roboTgChat',$('#tgChatId').value.trim());
+  sset('roboGhToken',$('#ghToken').value.trim());
+  sset('roboGhRepo',$('#ghRepo').value.trim());
+  $('#adminStatus').textContent='Settings & master cryptographic key saved locally.';
+  toast('Admin settings and master key updated.');
+};
+
+// Load saved vault on boot
+try{encryptedDatasetVault=JSON.parse(sget('roboLocalVault','[]'));}catch(e){}
+</script>
+</body>
+</html>

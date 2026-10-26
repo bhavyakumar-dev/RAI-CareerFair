@@ -1,16 +1,24 @@
 # ROBOVERSE — Robotics & AI Discovery Lab
 
-A colorful, mobile-friendly Robotics & AI website with interactive engineering games, a career quiz, college pathways, a practical roadmap builder, local score tracking, and a computer-vision lab.
+A colorful, mobile-friendly Robotics & AI exhibition website and neural computer vision laboratory with interactive engineering games, a career quiz, college pathways, a roadmap builder, and advanced on-device AI tools.
 
-## What runs where?
+## Multi-Version Experience Suite
 
-- **The whole site:** served as static assets by Cloudflare Workers.
-- **Object detection:** runs in the visitor's browser using the [Human library](https://github.com/vladmandic/human), which provides browser ML and a MobileNet-based CenterNet object detector. It detects common objects and draws real bounding boxes; it is not a fake overlay.
-- **Optional face demo:** with a separate opt-in, the same browser library can produce rough face-age and binary gender-model estimates. Those guesses can be inaccurate or biased and are not identity or gender-identity facts. Never use them to make decisions about people. For school demos, get permission before analysing someone else's image.
-- **Image privacy:** captured frames and selected photos are processed in the browser and are not sent to the website or an inference API. On first use, the browser downloads the JavaScript runtime and model weights from public CDNs; the library can cache models for later visits. Internet access is needed for first-time setup.
-- **No secrets:** no API keys, Python server, Docker, Workers AI binding, or external inference endpoint is needed.
+1. **v1 — Classic Pavilion (`/` or `index.html`)**: The flagship discovery lab with 3D Three.js interactive robot, continuous live on-device vision powered by **COCO-SSD** and **WitBlox MobileNet**, real numerical age/gender estimation via **Face-API `AgeGenderNet`**, 4 engineering simulation games, and experimental laptop relay ping.
+2. **v2 — Advanced Neural Suite (`/v2` or `v2.html`)**: The expanded edition featuring:
+   - **Client-Side AES-GCM (256-bit) Encrypted Dataset Vault**: Encrypts captured frames and classifications before storage; supports dispatching to Telegram Bot or GitHub repository without exposing images to unauthorized visitors.
+   - **Live Broadcast Video Recorder**: WebM broadcast stream capture with lower-third telemetry and relay forwarding.
+   - **Interactive AI Hand-Gesture Rover & Arm Arena**: Steer a simulated rover and clamp robotic grippers in real-time using webcam hand gestures or touch/mouse.
+   - **Global Robotics Competitions Directory**: Searchable, filterable calendar covering WRO, FIRST FRC/FTC, VEX, RoboCup, NASA Lunabotics, University Rover Challenge, and Technoxian.
+   - **Terms of Service & Privacy Policy**: Dedicated modal sheets detailing student data protection and ethical AI use.
 
-The current browser vision model performs general object detection, not Ultralytics YOLO or native OpenCV. This is deliberate: it keeps the deployable site static while running inference on the visitor's device.
+## Neural Vision & What Runs Where
+
+- **Object Detection**: Runs in the visitor's browser using **TensorFlow.js COCO-SSD**, detecting 80 common object classes with real-time bounding boxes and confidence scores.
+- **Scene Classification**: Powered by the official **WitBlox MobileNet** model (`https://ai.witblox.com/witblox-ai-vision/app1.html`) for instant deep categorization.
+- **Age & Gender Estimation**: Uses **Face-API `AgeGenderNet`** for realistic numerical age predictions (`~17 years`, `~24 years`) and gender metrics.
+- **Image Privacy**: Captured frames are processed 100% on-device in the visitor's browser. When dataset capture is enabled in `/v2`, all records are AES-256 encrypted using an Admin Passphrase before transmission.
+- **Zero Secrets Required**: No server API keys, Python servers, or Docker containers required. Optional experimental relay connects to a local laptop host if running.
 
 ## Deploying to Cloudflare (2 Easy Options)
 

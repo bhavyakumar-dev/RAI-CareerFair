@@ -71,8 +71,8 @@
   <div class="wrap">
     <div class="section-head"><div><span class="overline">Computer vision workbench</span><h2>Let a camera<br>see the world as data.</h2></div><p>Try object detection directly in your browser. A lightweight on-device vision model draws boxes around objects; no Python server, cloud inference endpoint or API key is needed.</p></div>
     <div class="vision-card">
-      <div class="vision-main"><div class="vision-stage" id="visionStage"><video id="visionVideo" playsinline muted></video><canvas id="visionResultCanvas" class="vision-canvas" aria-label="Image with model detections"></canvas><canvas id="captureCanvas" hidden></canvas><div class="vision-empty" id="visionEmpty"><span>📷</span><b>Your scene goes here</b><p>Start the camera or choose a photo. After the first model download, inference runs on this device.</p></div><div class="scan-line"></div></div><div class="vision-controls"><button class="button lime" id="cameraStart">Start camera</button><button class="button paper" id="cameraStop" disabled>Stop</button><label class="button paper" for="visionFile">Choose a photo</label><input type="file" accept="image/*" id="visionFile" hidden><button class="button orange" id="detectPhoto">Detect objects on-device</button></div><div class="game-status" id="visionStatus" style="color:#d7e2d5" aria-live="polite">Ready when you are. The model loads the first time you detect an image.</div></div>
-      <div class="vision-side"><span class="note-label" style="color:var(--lime)">Model status</span><h3>A model's guess is a starting point, not a fact.</h3><p>The browser model can detect common objects such as people, bottles, chairs, laptops and vehicles. Confidence is a model score, not a guarantee of correctness.</p><div class="api-status"><span class="status-dot" id="apiDot"></span><span id="apiText">On-device model not loaded</span></div><div class="settings-line"><input type="checkbox" id="faceOptIn"><label for="faceOptIn">Enable optional experimental face age + gender estimates for the next scan</label></div><div class="privacy-note" style="margin-bottom:12px">Off by default. These are rough model predictions from a face image, not a person's confirmed age or gender identity; errors and bias are possible. Get permission before using another person's image and never use predictions to make decisions about people.</div><div class="vision-results"><h4>DETECTION OUTPUT</h4><div id="visionDetections" class="detection-chips"><span class="detection-chip">Waiting for a frame</span></div><div id="faceResults" class="privacy-note">Face estimates stay off until you explicitly enable them.</div></div><p class="privacy-note">Privacy: the camera frame and uploaded image are processed in this browser and are not sent to an inference API. The runtime and model files are fetched from public CDNs on first use; the browser can cache model files for later visits.</p></div>
+      <div class="vision-main"><div class="vision-stage" id="visionStage"><video id="visionVideo" playsinline muted></video><canvas id="visionResultCanvas" class="vision-canvas" aria-label="Image with model detections"></canvas><canvas id="captureCanvas" hidden></canvas><div class="vision-empty" id="visionEmpty"><span>📷</span><b>Your scene goes here</b><p>Start the camera or choose a photo. Inference runs live on-device with COCO-SSD & WitBlox MobileNet.</p></div><div class="scan-line"></div></div><div class="vision-controls"><button class="button lime" id="cameraStart">Start camera</button><button class="button paper" id="cameraStop" disabled>Stop</button><label class="button paper" for="visionFile">Choose a photo</label><input type="file" accept="image/*" id="visionFile" hidden><button class="button orange" id="detectPhoto">Detect objects on-device</button><button class="button paper small" id="toggleLiveDetect" style="display:none;font-size:11px;padding:8px 12px;">Live tracking: ON</button></div><div class="game-status" id="visionStatus" style="color:#d7e2d5" aria-live="polite">Ready when you are. The models load automatically on camera start or photo upload.</div></div>
+      <div class="vision-side"><span class="note-label" style="color:var(--lime)">Model status</span><h3>A model's guess is a starting point, not a fact.</h3><p>Real-time COCO-SSD object detection + WitBlox MobileNet scene classifier + AgeGenderNet face analyzer running client-side.</p><div class="api-status"><span class="status-dot" id="apiDot"></span><span id="apiText">On-device models ready</span></div><div class="settings-line"><input type="checkbox" id="faceOptIn"><label for="faceOptIn">Enable optional experimental face age + gender estimates for scans</label></div><div class="privacy-note" style="margin-bottom:12px">Off by default. Estimates are computed using on-device neural networks, not facts. Never use predictions to make decisions about people.</div><div class="vision-results"><h4>DETECTION & CLASSIFICATION OUTPUT</h4><div id="visionDetections" class="detection-chips"><span class="detection-chip">Waiting for camera or photo</span></div><div id="faceResults" class="privacy-note">Face estimates stay off until you explicitly enable them.</div></div><div class="settings-line" style="margin-top:12px;padding-top:10px;border-top:1px dashed #405445;flex-wrap:wrap;gap:8px;"><div style="display:flex;align-items:center;gap:8px;width:100%;"><span class="note-label" style="color:var(--lime);font-size:9px;">EXPERIMENTAL</span><span style="font-size:11px;font-weight:700;color:#d7e0d4;">Laptop Vision Relay</span><span class="status-dot" id="laptopDot" style="margin-left:auto;background:#888;"></span><span id="laptopStatusText" style="font-family:var(--mono);font-size:10px;color:#aab8ac;">Standby</span></div><div style="display:flex;gap:6px;width:100%;"><input type="text" id="laptopUrl" placeholder="http://127.0.0.1:8765" value="http://127.0.0.1:8765" style="flex:1;background:#17231f;border:1px solid #506356;color:white;padding:6px 10px;border-radius:4px;font-family:var(--mono);font-size:11px;"><button class="button paper small" id="pingLaptopBtn" type="button" style="padding:6px 12px;font-size:11px;">Ping</button></div><label style="display:flex;align-items:center;gap:6px;font-size:10px;color:#aab8ac;cursor:pointer;"><input type="checkbox" id="laptopRelayOptIn" style="accent-color:var(--lime);"> Forward frames to laptop when connected</label></div><p class="privacy-note">Privacy: Camera frames are processed directly in your browser. No external API keys needed.</p></div>
     </div>
   </div>
 </section>
@@ -115,7 +115,10 @@
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 <div class="modal-backdrop" id="modalBackdrop" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><div class="modal"><button class="modal-close" id="modalClose" aria-label="Close dialog">×</button><div class="modal-label" id="modalLabel">ROBOTICS + AI</div><h2 id="modalTitle">Explore a path</h2><div id="modalBody"></div></div></div>
 <div class="modal-backdrop" id="qrBackdrop" role="dialog" aria-modal="true" aria-labelledby="qrTitle"><div class="modal"><button class="modal-close" id="qrClose" aria-label="Close dialog">×</button><div class="modal-label">SHARE THE LAB</div><h2 id="qrTitle">A little doorway to ROBOVERSE.</h2><p>When hosted, this QR code points to the live page. When opened as a local file, it points to that local file path, which will not work on other devices. Use the deployed URL for a public QR.</p><div class="qr-wrap"><div id="qrBox" class="qr-box"></div><div><button class="button blue" id="downloadQR">Download QR image</button><p class="small-muted" id="qrAddress" style="overflow-wrap:anywhere;margin-top:12px"></p></div></div></div></div>
-<script src="https://cdn.jsdelivr.net/npm/@vladmandic/human@3.3.6/dist/human.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.22.0/dist/tf.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd@2.2.3/dist/coco-ssd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/mobilenet@2.1.1/dist/mobilenet.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@vladmandic/face-api@1.7.12/dist/face-api.min.js"></script>
 <script>
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)]; const memoryStore=new Map(); const sget=(k,d=null)=>{try{return localStorage.getItem(k)??(memoryStore.has(k)?memoryStore.get(k):d)}catch{return memoryStore.has(k)?memoryStore.get(k):d}}; const sset=(k,v)=>{try{localStorage.setItem(k,v)}catch{}memoryStore.set(k,String(v));return true};
 const toast=t=>{const x=$('#toast');x.textContent=t;x.classList.add('show');clearTimeout(toast.timer);toast.timer=setTimeout(()=>x.classList.remove('show'),2600)};
@@ -144,29 +147,357 @@ function generateRoadmap(){const career=$('#roadCareer').value,stage=$('#roadSta
 const projectIdeas=[['Obstacle-aware rover','Parts: microcontroller or simulator, distance sensor, motor driver and two motors. Goal: stop before an obstacle. Test with 3 distances and record false stops.'],['Tiny image classifier','Parts: laptop and a small labelled dataset. Goal: classify two object categories. Compare performance on photos not used during training.'],['Smart plant monitor','Parts: moisture sensor, microcontroller and an LED. Goal: flag dry soil. Calibrate readings and test different soil conditions.'],['Robot arm pick-and-place','Parts: cardboard arm or servo kit. Goal: move an object between two marked points. Measure repeatability and add a safety limit.'],['Traffic-light simulator','Parts: LEDs or web simulator. Goal: design a timed crossing system. Test the edge cases and what happens when a sensor fails.'],['Vision-based recycling helper','Parts: camera, labelled sample images and an in-browser computer-vision demo. Goal: identify a small set of objects. Record wrong predictions and discuss limits.']];let projectPick=-1;$('#projectIdea').onclick=()=>{projectPick=(projectPick+1)%projectIdeas.length;const x=projectIdeas[projectPick];openModal(x[0],`<p>${x[1]}</p><p><b>Test like an engineer:</b> write down what success means before you start. Try multiple conditions, record errors and change only one thing at a time.</p><button class="button blue" id="projectToPlan">Use in my roadmap ↗</button>`,'PROJECT STARTER');$('#projectToPlan').onclick=()=>{closeModal();$('#roadmap').scrollIntoView({behavior:'smooth'});$('#roadCareer').value=x[0].includes('image')||x[0].includes('Vision')?'Computer vision engineer':x[0].includes('arm')||x[0].includes('rover')?'Robotics engineer':'Embedded systems engineer';generateRoadmap()}};
 $('#startReasoning').onclick=()=>{closeModal();selectGame('pattern');$('#games').scrollIntoView({behavior:'smooth'});toast('Pattern sprint ready. Score is just practice feedback.')};
 
-let visionStream=null,selectedImage=null,humanEngine=null,humanLoading=null,visionBusy=false;
-const browserVisionConfig={backend:'webgl',debug:false,modelBasePath:'https://vladmandic.github.io/human-models/models/',cacheModels:true,filter:{enabled:false},face:{enabled:true,detector:{rotation:false,maxDetected:5,minConfidence:0.3},mesh:{enabled:false},iris:{enabled:false},description:{enabled:false},emotion:{enabled:false},antispoof:{enabled:false},liveness:{enabled:false}},body:{enabled:false},hand:{enabled:false},object:{enabled:true,minConfidence:0.27,iouThreshold:0.35,maxDetected:20},gesture:{enabled:false},segmentation:{enabled:false}};
+let visionStream=null,selectedImage=null,visionBusy=false;
+let cocoModel=null,mobilenetModel=null,faceApiLoaded=false,visionLoadingPromise=null;
+let liveDetecting=false,liveDetectRaf=null,liveTrackingEnabled=true,isLaptopOnline=false;
+
 const escText=v=>String(v??'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
 function setVisionStatus(message,ok=false){$('#visionStatus').textContent=message;$('#visionStatus').style.color=ok?'#c9f36a':'#d7e2d5'}
-async function ensureVisionEngine(){if(humanEngine)return humanEngine;if(humanLoading)return humanLoading;humanLoading=(async()=>{if(!window.Human||!window.Human.Human)throw new Error('The browser vision library did not load. Check internet access or try again.');$('#apiText').textContent='Downloading model files to this browser…';$('#apiDot').classList.remove('ready');setVisionStatus('First run: downloading the vision runtime and model weights. This may take a little while; frames are not uploaded.');let lastError;for(const backend of ['webgl','wasm','cpu']){try{const cfg={...browserVisionConfig,backend};humanEngine=new window.Human.Human(cfg);await humanEngine.load();$('#apiDot').classList.add('ready');$('#apiText').textContent=`On-device model ready · ${backend.toUpperCase()}`;setVisionStatus('Model ready. Image analysis will run on this device.',true);return humanEngine}catch(error){lastError=error;humanEngine=null}}throw lastError||new Error('Could not load the vision models.');})().catch(error=>{humanLoading=null;humanEngine=null;$('#apiDot').classList.remove('ready');$('#apiText').textContent='Model could not load';setVisionStatus(`Vision setup failed: ${error?.message||error}. Check your connection and retry.`);throw error});return humanLoading}
+
+async function ensureVisionModels(){
+  if(cocoModel&&mobilenetModel)return {cocoModel,mobilenetModel};
+  if(visionLoadingPromise)return visionLoadingPromise;
+  visionLoadingPromise=(async()=>{
+    $('#apiText').textContent='Loading on-device models…';
+    $('#apiDot').classList.remove('ready');
+    setVisionStatus('Initializing TensorFlow.js, COCO-SSD & WitBlox MobileNet in browser…');
+    if(window.tf){
+      try{await tf.setBackend('webgl');await tf.ready();}catch(e){
+        try{await tf.setBackend('cpu');await tf.ready();}catch(e2){}
+      }
+    }
+    const [coco,net]=await Promise.all([
+      window.cocoSsd?cocoSsd.load():null,
+      window.mobilenet?mobilenet.load():null
+    ]);
+    cocoModel=coco;mobilenetModel=net;
+    if(window.faceapi&&!faceApiLoaded){
+      const MODEL_URL='https://cdn.jsdelivr.net/npm/@vladmandic/face-api@1.7.12/model/';
+      try{
+        await Promise.all([
+          faceapi.nets.tinyFaceDetector.loadFromUri(MODEL_URL),
+          faceapi.nets.ageGenderNet.loadFromUri(MODEL_URL)
+        ]);
+        faceApiLoaded=true;
+      }catch(fe){console.warn('Face-API preload:',fe);}
+    }
+    $('#apiDot').classList.add('ready');
+    const be=(window.tf?tf.getBackend():'webgl').toUpperCase();
+    $('#apiText').textContent=`On-device models active · ${be}`;
+    setVisionStatus('Neural networks loaded. Live on-device detection active.',true);
+    return {cocoModel,mobilenetModel};
+  })().catch(err=>{
+    visionLoadingPromise=null;
+    $('#apiDot').classList.remove('ready');
+    $('#apiText').textContent='Model load failed';
+    setVisionStatus(`Vision initialization error: ${err?.message||err}. Check internet connection.`);
+    throw err;
+  });
+  return visionLoadingPromise;
+}
+
 function currentSource(){const v=$('#visionVideo');if(visionStream&&v.readyState>=2&&v.videoWidth)return v;return selectedImage}
-function makeInferenceFrame(source){const width=source.videoWidth||source.naturalWidth||source.width,height=source.videoHeight||source.naturalHeight||source.height;if(!width||!height)throw new Error('The image is not ready yet.');const scale=Math.min(1,1280/Math.max(width,height));const frame=$('#captureCanvas');frame.width=Math.max(1,Math.round(width*scale));frame.height=Math.max(1,Math.round(height*scale));const ctx=frame.getContext('2d',{willReadFrequently:true});ctx.clearRect(0,0,frame.width,frame.height);ctx.drawImage(source,0,0,frame.width,frame.height);return frame}
-function paintTag(ctx,text,x,y,color,width){ctx.font='600 15px Alexandria,system-ui,sans-serif';const pad=7,tagH=24,tagW=Math.min(width,ctx.measureText(text).width+pad*2),tx=Math.max(0,Math.min(x,width-tagW)),ty=Math.max(0,y-tagH);ctx.fillStyle='rgba(23,34,31,.92)';ctx.fillRect(tx,ty,tagW,tagH);ctx.fillStyle=color;ctx.fillText(text,tx+pad,ty+16,tagW-pad*2)}
-function drawBoxes(canvas,frame,result,isCamera,includeFaces){canvas.width=frame.width;canvas.height=frame.height;const ctx=canvas.getContext('2d');ctx.clearRect(0,0,canvas.width,canvas.height);if(!isCamera)ctx.drawImage(frame,0,0);const line=Math.max(2,canvas.width/480);ctx.lineWidth=line;const palette=['#c9f36a','#ff7043','#9ce6c8','#f1a7ce','#ffdf70','#6db6ff'];const objects=result.object||[];objects.forEach((o,i)=>{const b=o.box||[];if(b.length<4)return;const [x,y,w,h]=b;const color=palette[i%palette.length];ctx.strokeStyle=color;ctx.strokeRect(x,y,w,h);paintTag(ctx,`${o.label||'object'} ${Math.round((o.score||0)*100)}%`,x,y,color,canvas.width)});const faces=includeFaces?(result.face||[]):[];faces.forEach((f,i)=>{const b=f.box||[];if(b.length<4)return;const [x,y,w,h]=b;ctx.save();ctx.setLineDash([7,4]);ctx.strokeStyle='#f1a7ce';ctx.strokeRect(x,y,w,h);ctx.restore();const age=Number.isFinite(f.age)?`~${Math.round(f.age)}y`:'age ?';const gender=f.gender&&f.gender!=='unknown'?f.gender:'uncertain';paintTag(ctx,`face ${i+1} · ${age} · ${gender}`,x,y,'#f1a7ce',canvas.width)});return {objects,faces}}
-function renderDetectionSummary(objects){$('#visionDetections').innerHTML=objects.length?objects.slice(0,20).map((o,i)=>`<span class="detection-chip">${escText(o.label||'object')} · ${Math.round((o.score||0)*100)}%</span>`).join(''):'<span class="detection-chip">No clear objects found — try brighter lighting or move closer.</span>'}
-function renderFaceSummary(faces,enabled){if(!enabled){$('#faceResults').textContent='Face estimates are off. Enable the optional demonstration before the next scan.';return}$('#faceResults').textContent=faces.length?faces.map((f,i)=>`Face ${i+1}: approximate age guess ${Number.isFinite(f.age)?'~'+Math.round(f.age)+' years':'unavailable'}; model gender label ${f.gender||'uncertain'} (score ${Number.isFinite(f.genderScore)?Math.round(f.genderScore*100)+'%':'not provided'}). These are rough model outputs, not facts.`).join(' '):'No face was detected clearly enough for the optional estimate.'}
-async function detectInBrowser(){if(visionBusy)return;const source=currentSource();if(!source){toast('Start the camera or choose a photo first.');return}visionBusy=true;$('#detectPhoto').disabled=true;$('#visionStage').classList.add('processing');$('#visionDetections').innerHTML='<span class="detection-chip">Loading model / analysing locally…</span>';const includeFaces=$('#faceOptIn').checked;const started=performance.now();try{const engine=await ensureVisionEngine();const frame=makeInferenceFrame(source);const configOverride={face:{description:{enabled:includeFaces}}};const result=await engine.detect(frame,configOverride);const objects=result.object||[];const faces=includeFaces?(result.face||[]):[];const canvas=$('#visionResultCanvas');$('#visionVideo').classList.toggle('on',!!(visionStream&&source===$('#visionVideo')));$('#visionEmpty').style.display='none';drawBoxes(canvas,frame,result,!!(visionStream&&source===$('#visionVideo')),includeFaces);canvas.classList.add('on');renderDetectionSummary(objects);renderFaceSummary(faces,includeFaces);const elapsed=Math.round(performance.now()-started);setVisionStatus(`Done in ${elapsed} ms on your device · ${objects.length} object detection${objects.length===1?'':'s'}${includeFaces?' · optional face estimates enabled':''}.`,true);if(typeof updateMission==='function')updateMission()}catch(error){setVisionStatus(`Detection failed: ${error?.message||error}. Check the connection, then try again.`);$('#visionDetections').innerHTML='<span class="detection-chip">Inference did not complete</span>'}finally{visionBusy=false;$('#detectPhoto').disabled=false;$('#visionStage').classList.remove('processing')}}
-$('#cameraStart').onclick=async()=>{try{if(!navigator.mediaDevices?.getUserMedia)throw new Error('This browser does not support camera access. Open the deployed HTTPS website.');selectedImage=null;const video=$('#visionVideo');visionStream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'environment',width:{ideal:960},height:{ideal:720}},audio:false});video.srcObject=visionStream;await video.play();video.classList.add('on');$('#visionResultCanvas').classList.remove('on');$('#visionEmpty').style.display='none';$('#cameraStart').disabled=true;$('#cameraStop').disabled=false;setVisionStatus('Camera is on. Tap Detect objects on-device to analyse one frame. Nothing is uploaded.')}catch(error){setVisionStatus(`${error.message||'Camera permission was denied.'} You can use Choose a photo instead.`)}};
-function stopVisionCamera(){if(visionStream)visionStream.getTracks().forEach(track=>track.stop());visionStream=null;const video=$('#visionVideo');video.pause();video.srcObject=null;video.classList.remove('on');$('#cameraStart').disabled=false;$('#cameraStop').disabled=true;const canvas=$('#visionResultCanvas');const ctx=canvas.getContext('2d');ctx.clearRect(0,0,canvas.width,canvas.height);if(selectedImage){canvas.width=selectedImage.naturalWidth;canvas.height=selectedImage.naturalHeight;canvas.getContext('2d').drawImage(selectedImage,0,0);canvas.classList.add('on');$('#visionEmpty').style.display='none'}else{canvas.classList.remove('on');$('#visionEmpty').style.display='block'}$('#visionStage').classList.remove('processing');setVisionStatus('Camera is off. This page does not upload camera frames.')}
-$('#cameraStop').onclick=stopVisionCamera;window.addEventListener('pagehide',()=>{if(visionStream)visionStream.getTracks().forEach(track=>track.stop())});
-$('#visionFile').onchange=async event=>{const file=event.target.files?.[0];if(!file)return;if(!file.type.startsWith('image/')){toast('Choose an image file.');return}if(file.size>8*1024*1024){toast('Please choose an image under 8 MB.');return}try{const url=await new Promise((resolve,reject)=>{const reader=new FileReader();reader.onload=()=>resolve(reader.result);reader.onerror=reject;reader.readAsDataURL(file)});const image=new Image();await new Promise((resolve,reject)=>{image.onload=resolve;image.onerror=reject;image.src=url});selectedImage=image;if(visionStream)stopVisionCamera();$('#visionVideo').classList.remove('on');const canvas=$('#visionResultCanvas');canvas.width=image.naturalWidth;canvas.height=image.naturalHeight;canvas.getContext('2d').drawImage(image,0,0);canvas.classList.add('on');$('#visionEmpty').style.display='none';$('#visionDetections').innerHTML='<span class="detection-chip">Photo ready · waiting for inference</span>';renderFaceSummary([],false);setVisionStatus(`Photo ready (${Math.round(file.size/1024)} KB). Press Detect objects on-device.`)}catch(error){toast('Could not read that image.')}};
+
+function makeInferenceFrame(source){
+  const width=source.videoWidth||source.naturalWidth||source.width,height=source.videoHeight||source.naturalHeight||source.height;
+  if(!width||!height)throw new Error('Image or video stream not ready yet.');
+  const scale=Math.min(1,1024/Math.max(width,height));
+  const frame=$('#captureCanvas');
+  frame.width=Math.max(1,Math.round(width*scale));
+  frame.height=Math.max(1,Math.round(height*scale));
+  const ctx=frame.getContext('2d',{willReadFrequently:true});
+  ctx.clearRect(0,0,frame.width,frame.height);
+  ctx.drawImage(source,0,0,frame.width,frame.height);
+  return frame;
+}
+
+function paintTag(ctx,text,x,y,color,width){
+  ctx.font='600 13px Alexandria,system-ui,sans-serif';
+  const pad=6,tagH=22,tagW=Math.min(width,ctx.measureText(text).width+pad*2);
+  const tx=Math.max(0,Math.min(x,width-tagW)),ty=Math.max(0,y-tagH);
+  ctx.fillStyle='rgba(23,34,31,.92)';
+  ctx.fillRect(tx,ty,tagW,tagH);
+  ctx.fillStyle=color;
+  ctx.fillText(text,tx+pad,ty+15,tagW-pad*2);
+}
+
+function drawBoxes(canvas,frame,result,isCamera,includeFaces){
+  canvas.width=frame.width;canvas.height=frame.height;
+  const ctx=canvas.getContext('2d');
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  if(!isCamera)ctx.drawImage(frame,0,0);
+  const line=Math.max(2,canvas.width/480);
+  ctx.lineWidth=line;
+  const palette=['#c9f36a','#ff7043','#9ce6c8','#f1a7ce','#ffdf70','#6db6ff'];
+  const objects=result.objects||[];
+  objects.forEach((o,i)=>{
+    const b=o.box||[];if(b.length<4)return;
+    const [x,y,w,h]=b;const color=palette[i%palette.length];
+    ctx.strokeStyle=color;
+    ctx.strokeRect(x,y,w,h);
+    paintTag(ctx,`${o.label||'object'} ${Math.round((o.score||0)*100)}%`,x,y,color,canvas.width);
+  });
+  const faces=includeFaces?(result.faces||[]):[];
+  faces.forEach((f,i)=>{
+    const b=f.box||[];if(b.length<4)return;
+    const [x,y,w,h]=b;
+    ctx.save();ctx.setLineDash([6,4]);ctx.strokeStyle='#f1a7ce';
+    ctx.strokeRect(x,y,w,h);ctx.restore();
+    const age=Number.isFinite(f.age)?`~${Math.round(f.age)}y`:'age ?';
+    const gender=f.gender&&f.gender!=='unknown'?f.gender:'uncertain';
+    paintTag(ctx,`Face ${i+1} · ${age} · ${gender}`,x,y,'#f1a7ce',canvas.width);
+  });
+  return {objects,faces};
+}
+
+function renderDetectionSummary(objects,classifications){
+  let html='';
+  if(objects&&objects.length){
+    html+=objects.slice(0,12).map(o=>`<span class="detection-chip">${escText(o.label)} · ${Math.round((o.score||0)*100)}%</span>`).join(' ');
+  }
+  if(classifications&&classifications.length){
+    html+=' '+classifications.slice(0,3).map(c=>`<span class="detection-chip" style="background:#284fe8;color:white;">⚡ WitBlox: ${escText(c.label.split(',')[0])} (${Math.round((c.score||0)*100)}%)</span>`).join(' ');
+  }
+  if(!html){
+    html='<span class="detection-chip">No clear objects found — try brighter lighting or move closer.</span>';
+  }
+  $('#visionDetections').innerHTML=html;
+}
+
+function renderFaceSummary(faces,enabled){
+  if(!enabled){
+    $('#faceResults').textContent='Face estimates are off. Enable the optional demonstration before the next scan.';
+    return;
+  }
+  if(!faces||!faces.length){
+    $('#faceResults').textContent='No face detected clearly enough for age/gender estimates.';
+    return;
+  }
+  $('#faceResults').innerHTML=faces.map((f,i)=>`
+    <div style="margin-top:4px;padding:6px 9px;background:#20342b;border-radius:4px;border-left:3px solid #f1a7ce;font-size:11px;">
+      <b>Face ${i+1}:</b> Approx. <b>~${Math.round(f.age)} years old</b> · Model gender: <b>${escText(f.gender||'uncertain')}</b> (${Math.round((f.genderScore||0)*100)}% score). Rough estimate, not fact.
+    </div>
+  `).join('');
+}
+
+async function runInferenceOnFrame(frame,includeFaces){
+  await ensureVisionModels();
+  let objects=[];let classifications=[];let faces=[];
+  if(cocoModel){
+    try{
+      const preds=await cocoModel.detect(frame);
+      objects=preds.map(p=>({box:p.bbox,label:p.class,score:p.score}));
+    }catch(e){console.warn('COCO error:',e);}
+  }
+  if(mobilenetModel){
+    try{
+      const top=await mobilenetModel.classify(frame,3);
+      classifications=top.map(p=>({label:p.className,score:p.probability}));
+    }catch(e){console.warn('MobileNet error:',e);}
+  }
+  if(includeFaces&&window.faceapi){
+    try{
+      if(!faceApiLoaded){
+        const MODEL_URL='https://cdn.jsdelivr.net/npm/@vladmandic/face-api@1.7.12/model/';
+        await Promise.all([
+          faceapi.nets.tinyFaceDetector.loadFromUri(MODEL_URL),
+          faceapi.nets.ageGenderNet.loadFromUri(MODEL_URL)
+        ]);
+        faceApiLoaded=true;
+      }
+      const detections=await faceapi.detectAllFaces(
+        frame,
+        new faceapi.TinyFaceDetectorOptions({inputSize:320,scoreThreshold:0.32})
+      ).withAgeAndGender();
+      faces=detections.map(d=>({
+        box:[d.detection.box.x,d.detection.box.y,d.detection.box.width,d.detection.box.height],
+        age:d.age,
+        gender:d.gender,
+        genderScore:d.genderProbability
+      }));
+    }catch(fe){console.warn('Face-API detect error:',fe);}
+  }
+  return {objects,classifications,faces};
+}
+
+async function startLiveDetectionLoop(){
+  if(liveDetecting)return;
+  liveDetecting=true;
+  try{await ensureVisionModels();}catch(e){return;}
+  const video=$('#visionVideo');
+  const canvas=$('#visionResultCanvas');
+  canvas.classList.add('on');
+  let frameCount=0;
+  async function loop(){
+    if(!visionStream||!liveTrackingEnabled){liveDetecting=false;return;}
+    if(video.readyState>=2&&video.videoWidth>0&&!visionBusy){
+      frameCount++;
+      // Process every 2nd frame for smooth 30+ FPS UX
+      if(frameCount%2===0){
+        try{
+          const frame=makeInferenceFrame(video);
+          const includeFaces=$('#faceOptIn').checked;
+          const result=await runInferenceOnFrame(frame,includeFaces);
+          drawBoxes(canvas,frame,result,true,includeFaces);
+          renderDetectionSummary(result.objects,result.classifications);
+          if(includeFaces)renderFaceSummary(result.faces,true);
+        }catch(err){console.warn('Live loop frame skipped:',err);}
+      }
+    }
+    liveDetectRaf=requestAnimationFrame(loop);
+  }
+  loop();
+}
+
+async function detectInBrowser(){
+  if(visionBusy)return;
+  const source=currentSource();
+  if(!source){toast('Start the camera or choose a photo first.');return;}
+  visionBusy=true;
+  $('#detectPhoto').disabled=true;
+  $('#visionStage').classList.add('processing');
+  $('#visionDetections').innerHTML='<span class="detection-chip">Analysing frame with neural nets…</span>';
+  const includeFaces=$('#faceOptIn').checked;
+  const started=performance.now();
+  try{
+    const frame=makeInferenceFrame(source);
+    const result=await runInferenceOnFrame(frame,includeFaces);
+    const canvas=$('#visionResultCanvas');
+    $('#visionVideo').classList.toggle('on',!!(visionStream&&source===$('#visionVideo')));
+    $('#visionEmpty').style.display='none';
+    drawBoxes(canvas,frame,result,!!(visionStream&&source===$('#visionVideo')),includeFaces);
+    canvas.classList.add('on');
+    renderDetectionSummary(result.objects,result.classifications);
+    renderFaceSummary(result.faces,includeFaces);
+    const elapsed=Math.round(performance.now()-started);
+    setVisionStatus(`Analyzed in ${elapsed} ms · ${result.objects.length} objects · WitBlox classification active${includeFaces?' · age/gender estimates active':''}.`,true);
+    if(typeof updateMission==='function')updateMission();
+  }catch(error){
+    setVisionStatus(`Detection failed: ${error?.message||error}. Check models and retry.`);
+    $('#visionDetections').innerHTML='<span class="detection-chip">Inference failed</span>';
+  }finally{
+    visionBusy=false;
+    $('#detectPhoto').disabled=false;
+    $('#visionStage').classList.remove('processing');
+  }
+}
+
+$('#cameraStart').onclick=async()=>{
+  try{
+    if(!navigator.mediaDevices?.getUserMedia)throw new Error('Camera requires HTTPS or localhost.');
+    selectedImage=null;
+    const video=$('#visionVideo');
+    visionStream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'environment',width:{ideal:960},height:{ideal:720}},audio:false});
+    video.srcObject=visionStream;
+    await video.play();
+    video.classList.add('on');
+    $('#visionResultCanvas').classList.remove('on');
+    $('#visionEmpty').style.display='none';
+    $('#cameraStart').disabled=true;
+    $('#cameraStop').disabled=false;
+    const liveBtn=$('#toggleLiveDetect');
+    if(liveBtn){liveBtn.style.display='inline-flex';liveBtn.textContent='Live tracking: ON';}
+    setVisionStatus('Camera is active. Live object detection and WitBlox recognition running on-device.',true);
+    startLiveDetectionLoop();
+  }catch(error){
+    setVisionStatus(`${error.message||'Camera permission denied.'} Use Choose a photo instead.`);
+  }
+};
+
+function stopVisionCamera(){
+  if(liveDetectRaf)cancelAnimationFrame(liveDetectRaf);
+  liveDetecting=false;
+  if(visionStream)visionStream.getTracks().forEach(track=>track.stop());
+  visionStream=null;
+  const video=$('#visionVideo');
+  video.pause();video.srcObject=null;video.classList.remove('on');
+  $('#cameraStart').disabled=false;$('#cameraStop').disabled=true;
+  const liveBtn=$('#toggleLiveDetect');if(liveBtn)liveBtn.style.display='none';
+  const canvas=$('#visionResultCanvas');
+  const ctx=canvas.getContext('2d');
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  if(selectedImage){
+    canvas.width=selectedImage.naturalWidth;canvas.height=selectedImage.naturalHeight;
+    canvas.getContext('2d').drawImage(selectedImage,0,0);
+    canvas.classList.add('on');$('#visionEmpty').style.display='none';
+  }else{
+    canvas.classList.remove('on');$('#visionEmpty').style.display='block';
+  }
+  $('#visionStage').classList.remove('processing');
+  setVisionStatus('Camera stopped.');
+}
+$('#cameraStop').onclick=stopVisionCamera;
+window.addEventListener('pagehide',()=>{if(visionStream)visionStream.getTracks().forEach(track=>track.stop())});
+
+const liveBtn=$('#toggleLiveDetect');
+if(liveBtn){
+  liveBtn.onclick=()=>{
+    liveTrackingEnabled=!liveTrackingEnabled;
+    liveBtn.textContent=liveTrackingEnabled?'Live tracking: ON':'Live tracking: PAUSED';
+    liveBtn.classList.toggle('blue',liveTrackingEnabled);
+    if(liveTrackingEnabled&&visionStream)startLiveDetectionLoop();
+  };
+}
+
+$('#visionFile').onchange=async event=>{
+  const file=event.target.files?.[0];if(!file)return;
+  if(!file.type.startsWith('image/')){toast('Please select an image file.');return;}
+  if(file.size>10*1024*1024){toast('Image file exceeds 10 MB limit.');return;}
+  try{
+    const url=await new Promise((resolve,reject)=>{const r=new FileReader();r.onload=()=>resolve(r.result);r.onerror=reject;r.readAsDataURL(file);});
+    const image=new Image();
+    await new Promise((resolve,reject)=>{image.onload=resolve;image.onerror=reject;image.src=url;});
+    selectedImage=image;
+    if(visionStream)stopVisionCamera();
+    $('#visionVideo').classList.remove('on');
+    const canvas=$('#visionResultCanvas');
+    canvas.width=image.naturalWidth;canvas.height=image.naturalHeight;
+    canvas.getContext('2d').drawImage(image,0,0);
+    canvas.classList.add('on');
+    $('#visionEmpty').style.display='none';
+    $('#visionDetections').innerHTML='<span class="detection-chip">Photo ready · Click Detect objects on-device</span>';
+    setVisionStatus(`Photo loaded (${Math.round(file.size/1024)} KB). Tap Detect objects on-device.`);
+  }catch(err){toast('Could not load image file.');}
+};
 $('#detectPhoto').onclick=detectInBrowser;
-$('#faceOptIn').addEventListener('change',()=>{if($('#faceOptIn').checked){$('#faceResults').textContent='Enabled for the next scan only. Predictions are estimates and can be wrong.'}else $('#faceResults').textContent='Face estimates are off.'});
+$('#faceOptIn').addEventListener('change',()=>{
+  if($('#faceOptIn').checked){
+    $('#faceResults').textContent='Face & age model active for next detection. Estimates are on-device approximations.';
+  }else{
+    $('#faceResults').textContent='Face estimates are off.';
+  }
+});
+
+// Laptop Relay Ping
+$('#pingLaptopBtn').onclick=async()=>{
+  const url=($('#laptopUrl')?.value||'http://127.0.0.1:8765').trim().replace(/\/+$/,'');
+  const dot=$('#laptopDot');const text=$('#laptopStatusText');
+  text.textContent='Pinging…';dot.style.background='#ffd361';
+  const start=performance.now();
+  try{
+    const ctrl=new AbortController();
+    const t=setTimeout(()=>ctrl.abort(),2500);
+    const res=await fetch(`${url}/api/status`,{signal:ctrl.signal,mode:'cors'}).catch(()=>{
+      return fetch(`${url}/healthz`,{signal:ctrl.signal,mode:'cors'});
+    });
+    clearTimeout(t);
+    const lat=Math.round(performance.now()-start);
+    if(res.ok||res.status===401||res.status===404){
+      isLaptopOnline=true;dot.style.background='#c9f36a';
+      text.textContent=`Online (${lat}ms)`;
+      toast(`Connected to laptop relay at ${url} (${lat}ms)`);
+    }else throw new Error(`HTTP ${res.status}`);
+  }catch(err){
+    isLaptopOnline=false;dot.style.background='#ff7043';
+    text.textContent='Offline';
+    toast('Laptop relay is offline. Running models in browser.');
+  }
+};
 
 let challengeScore=0;function storeScore(){sset('roboChallengeScore',String(challengeScore))}document.addEventListener('click',e=>{if(e.target.closest('.game-panel')&&e.target.closest('button')){challengeScore=Math.max(challengeScore,missionCount+mlScore+patScore);storeScore()}});
 $('#leaderForm').onsubmit=e=>{e.preventDefault();const name=$('#leaderName').value.trim();if(!name){toast('Add a nickname first.');return}if(!$('#leaderConsent').checked){toast('Tick the permission box to save the nickname.');return}const rows=JSON.parse(sget('roboversLocalLeaderboard','[]'));rows.push({name:name.replace(/[<>]/g,''),score:Math.max(challengeScore,missionCount+mlScore+patScore),date:Date.now()});rows.sort((a,b)=>b.score-a.score);sset('roboversLocalLeaderboard',JSON.stringify(rows.slice(0,12)));$('#leaderName').value='';renderLeaderboard();toast('Score saved on this device.');};function renderLeaderboard(){const rows=JSON.parse(sget('roboversLocalLeaderboard','[]'));$('#leaderRows').innerHTML=rows.length?rows.map((r,i)=>`<div class="leader-row"><span class="rank">${i+1}</span><span>${r.name}</span><b class="leader-score">${r.score} pts</b></div>`).join(''):'<div class="leader-empty">No saved scores yet. Complete a few missions, then add a nickname with permission to begin this device’s leaderboard.</div>'}renderLeaderboard();
 
-let adminClicks=0,adminTimer;$('.brand').addEventListener('click',e=>{if(e.detail>1)return;adminClicks++;clearTimeout(adminTimer);adminTimer=setTimeout(()=>adminClicks=0,1600);if(adminClicks>=5){e.preventDefault();location.hash='admin';adminClicks=0;showAdmin()}});$('#adminSecretLink').addEventListener('click',e=>{if(location.hash==='#admin'){e.preventDefault();showAdmin()}});function showAdmin(){const d=$('#adminDrawer');d.classList.add('show');d.scrollIntoView({behavior:'smooth'});if(!$('#featureToggles').children.length){const features=[['Play lab','#games'],['Vision workbench','#vision'],['Career quiz and directory','#careers'],['College routes','#colleges'],['Roadmap builder','#roadmap'],['Project and reasoning extras','#extras']];$('#featureToggles').innerHTML=features.map(([name,target],i)=>`<label class="admin-toggle"><span>${name}</span><input type="checkbox" checked data-feature-target="${target}" aria-label="Enable ${name}"></label>`).join('');$$('[data-feature-target]').forEach(x=>x.onchange=()=>{$(x.dataset.featureTarget).classList.toggle('hidden-section',!x.checked);saveAdminSettings()});const routes=[['Browser object detection',true],['Allow optional face estimates (user opt-in still required)',true],['Pattern reasoning game',true]];$('#routeToggles').innerHTML=routes.map(([n,v],i)=>`<label class="admin-toggle"><span>${n}</span><input type="checkbox" data-route="${i}" ${v?'checked':''} aria-label="${n}"></label>`).join('');loadAdminSettings();$$('[data-route]').forEach(x=>x.onchange=()=>{applyRouteSettings();saveAdminSettings();if(x.dataset.route==='1'&&x.checked)$('#adminStatus').textContent='Face estimates are available only as an optional, visitor-triggered demonstration. The visitor must still tick the opt-in checkbox.'});applyRouteSettings()} }function applyRouteSettings(){const visionOn=$('[data-route="0"]')?.checked!==false;const faceOn=$('[data-route="1"]')?.checked!==false;const patternOn=$('[data-route="2"]')?.checked!==false;if(!visionOn&&visionStream)stopVisionCamera();$('#cameraStart').disabled=!visionOn;$('#cameraStop').disabled=!visionOn||!visionStream;$('#detectPhoto').disabled=!visionOn;$('#visionFile').disabled=!visionOn;$('#faceOptIn').disabled=!visionOn||!faceOn;if(!faceOn)$('#faceOptIn').checked=false;const tab=$('[data-game="pattern"]');if(tab)tab.classList.toggle('hidden-section',!patternOn);$('#game-pattern').classList.toggle('hidden-section',!patternOn);if(!patternOn&&$('#game-pattern').classList.contains('active'))selectGame('route');if(!visionOn){$('#apiText').textContent='Browser vision disabled by admin';setVisionStatus('The on-device vision lab is disabled in site controls.')}else if($('#apiText').textContent==='Browser vision disabled by admin')$('#apiText').textContent=humanEngine?'On-device model ready':'On-device model not loaded'}function saveAdminSettings(){const s={features:$$('[data-feature-target]').map(x=>({target:x.dataset.featureTarget,on:x.checked})),routes:$$('[data-route]').map(x=>x.checked),title:$('#shareTitle').value};sset('roboversAdminSettings',JSON.stringify(s));}function loadAdminSettings(){const raw=sget('roboversAdminSettings');if(!raw)return;try{const s=JSON.parse(raw);(s.features||[]).forEach(x=>{const el=$(`[data-feature-target="${x.target}"]`);if(el)el.checked=x.on;const target=$(x.target);if(target)target.classList.toggle('hidden-section',!x.on)});(s.routes||[]).forEach((v,i)=>{const el=$(`[data-route="${i}"]`);if(el)el.checked=v});if(s.title)$('#shareTitle').value=s.title}catch(e){}}$('#saveAdmin').onclick=()=>{saveAdminSettings();$('#adminStatus').textContent='Saved in this browser. No API keys or server-side services are used by the on-device vision lab.';toast('Local site settings saved.');};if(location.hash==='#admin')showAdmin();setTimeout(loadAdminSettings,0);
+let adminClicks=0,adminTimer;$('.brand').addEventListener('click',e=>{if(e.detail>1)return;adminClicks++;clearTimeout(adminTimer);adminTimer=setTimeout(()=>adminClicks=0,1600);if(adminClicks>=5){e.preventDefault();location.hash='admin';adminClicks=0;showAdmin()}});$('#adminSecretLink').addEventListener('click',e=>{if(location.hash==='#admin'){e.preventDefault();showAdmin()}});function showAdmin(){const d=$('#adminDrawer');d.classList.add('show');d.scrollIntoView({behavior:'smooth'});if(!$('#featureToggles').children.length){const features=[['Play lab','#games'],['Vision workbench','#vision'],['Career quiz and directory','#careers'],['College routes','#colleges'],['Roadmap builder','#roadmap'],['Project and reasoning extras','#extras']];$('#featureToggles').innerHTML=features.map(([name,target],i)=>`<label class="admin-toggle"><span>${name}</span><input type="checkbox" checked data-feature-target="${target}" aria-label="Enable ${name}"></label>`).join('');$$('[data-feature-target]').forEach(x=>x.onchange=()=>{$(x.dataset.featureTarget).classList.toggle('hidden-section',!x.checked);saveAdminSettings()});const routes=[['Browser object detection',true],['Allow optional face estimates (user opt-in still required)',true],['Pattern reasoning game',true]];$('#routeToggles').innerHTML=routes.map(([n,v],i)=>`<label class="admin-toggle"><span>${n}</span><input type="checkbox" data-route="${i}" ${v?'checked':''} aria-label="${n}"></label>`).join('');loadAdminSettings();$$('[data-route]').forEach(x=>x.onchange=()=>{applyRouteSettings();saveAdminSettings();if(x.dataset.route==='1'&&x.checked)$('#adminStatus').textContent='Face estimates are available only as an optional, visitor-triggered demonstration. The visitor must still tick the opt-in checkbox.'});applyRouteSettings()} }function applyRouteSettings(){const visionOn=$('[data-route="0"]')?.checked!==false;const faceOn=$('[data-route="1"]')?.checked!==false;const patternOn=$('[data-route="2"]')?.checked!==false;if(!visionOn&&visionStream)stopVisionCamera();$('#cameraStart').disabled=!visionOn;$('#cameraStop').disabled=!visionOn||!visionStream;$('#detectPhoto').disabled=!visionOn;$('#visionFile').disabled=!visionOn;$('#faceOptIn').disabled=!visionOn||!faceOn;if(!faceOn)$('#faceOptIn').checked=false;const tab=$('[data-game="pattern"]');if(tab)tab.classList.toggle('hidden-section',!patternOn);$('#game-pattern').classList.toggle('hidden-section',!patternOn);if(!patternOn&&$('#game-pattern').classList.contains('active'))selectGame('route');if(!visionOn){$('#apiText').textContent='Browser vision disabled by admin';setVisionStatus('The on-device vision lab is disabled in site controls.')}else if($('#apiText').textContent==='Browser vision disabled by admin')$('#apiText').textContent=cocoModel?'On-device models active':'On-device models not loaded'}function saveAdminSettings(){const s={features:$$('[data-feature-target]').map(x=>({target:x.dataset.featureTarget,on:x.checked})),routes:$$('[data-route]').map(x=>x.checked),title:$('#shareTitle').value};sset('roboversAdminSettings',JSON.stringify(s));}function loadAdminSettings(){const raw=sget('roboversAdminSettings');if(!raw)return;try{const s=JSON.parse(raw);(s.features||[]).forEach(x=>{const el=$(`[data-feature-target="${x.target}"]`);if(el)el.checked=x.on;const target=$(x.target);if(target)target.classList.toggle('hidden-section',!x.on)});(s.routes||[]).forEach((v,i)=>{const el=$(`[data-route="${i}"]`);if(el)el.checked=v});if(s.title)$('#shareTitle').value=s.title}catch(e){}}$('#saveAdmin').onclick=()=>{saveAdminSettings();$('#adminStatus').textContent='Saved in this browser. No API keys or server-side services are used by the on-device vision lab.';toast('Local site settings saved.');};if(location.hash==='#admin')showAdmin();setTimeout(loadAdminSettings,0);
 
 $('#makeQR').onclick=()=>{const url=location.href;$('#qrAddress').textContent=url;$('#qrBox').innerHTML='';const img=document.createElement('img');img.alt='QR code for the current website';img.src='https://api.qrserver.com/v1/create-qr-code/?size=240x240&margin=8&color=284fe8&bgcolor=ffffff&data='+encodeURIComponent(url);img.onload=()=>{};img.onerror=()=>{$('#qrBox').textContent='Could not load QR service.'};$('#qrBox').append(img);$('#qrBackdrop').classList.add('show')};$('#qrClose').onclick=()=>$('#qrBackdrop').classList.remove('show');$('#qrBackdrop').onclick=e=>{if(e.target===$('#qrBackdrop'))$('#qrBackdrop').classList.remove('show')};$('#downloadQR').onclick=async()=>{const img=$('#qrBox img');if(!img||!img.complete){toast('Wait for the QR image to load.');return}try{const c=document.createElement('canvas');c.width=img.naturalWidth;c.height=img.naturalHeight;c.getContext('2d').drawImage(img,0,0);const a=document.createElement('a');a.href=c.toDataURL('image/png');a.download='robovers-qr.png';a.click()}catch(e){window.open(img.src,'_blank','noopener');toast('Opened QR image in a new tab.') }};
 window.addEventListener('keydown',e=>{if(e.key==='Escape'){closeModal();$('#qrBackdrop').classList.remove('show')}});
