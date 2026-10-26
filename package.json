@@ -1,0 +1,15 @@
+{
+  "name": "roboverser-browser",
+  "version": "1.0.0",
+  "private": true,
+  "description": "ROBOVERSE Robotics & AI discovery website with browser-only computer vision.",
+  "scripts": {
+    "dev": "wrangler dev",
+    "build": "echo 'Static assets ready in public/'",
+    "deploy": "wrangler deploy"
+  },
+  "devDependencies": {
+    "wrangler": "^4.45.0"
+  },
+  "type": "module"
+}

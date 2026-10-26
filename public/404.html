@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#f4f1e8">
+<title>404 — Signal Lost | ROBOVERSE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@400;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #f4f1e8;
+    --ink: #17221f;
+    --muted: #66716a;
+    --blue: #284fe8;
+    --orange: #ff7043;
+    --lime: #c9f36a;
+    --head: 'Alexandria', sans-serif;
+    --mono: 'DM Mono', monospace;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--head);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    text-align: center;
+  }
+  .card {
+    background: #fffdf7;
+    border: 2px solid #d5d8ca;
+    box-shadow: 6px 8px 0 rgba(24, 36, 33, 0.12);
+    border-radius: 12px;
+    padding: clamp(32px, 6vw, 56px);
+    max-width: 540px;
+    width: 100%;
+  }
+  .tag {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--blue);
+    background: #e6ebff;
+    padding: 6px 12px;
+    border-radius: 99px;
+    margin-bottom: 20px;
+  }
+  h1 {
+    font-size: clamp(48px, 9vw, 84px);
+    letter-spacing: -0.07em;
+    line-height: 1;
+    color: var(--orange);
+    margin-bottom: 12px;
+  }
+  h2 {
+    font-size: clamp(20px, 3.5vw, 28px);
+    letter-spacing: -0.04em;
+    margin-bottom: 14px;
+  }
+  p {
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.7;
+    margin-bottom: 28px;
+  }
+  .button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: var(--blue);
+    color: #fff;
+    text-decoration: none;
+    font-weight: 750;
+    font-size: 14px;
+    padding: 13px 24px;
+    border-radius: 999px;
+    box-shadow: 0 6px 0 #1d38a5;
+    transition: transform 0.15s ease;
+  }
+  .button:hover {
+    transform: translateY(-2px);
+  }
+</style>
+</head>
+<body>
+  <div class="card">
+    <span class="tag">Error 404 • Navigation Sensor Drift</span>
+    <h1>404</h1>
+    <h2>Coordinates Not Found</h2>
+    <p>The robot trajectory couldn't locate this page. It might have been relocated, or the sensor path drifted off the grid.</p>
+    <a href="/" class="button">Return to ROBOVERSE Lab <span>↗</span></a>
+  </div>
+</body>
+</html>
