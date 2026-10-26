@@ -196,15 +196,36 @@ section{padding:clamp(64px,8vw,110px) 0;position:relative}
   .nav-links a{padding:11px 4px;font-size:13px;border-bottom:1px solid #e0ddd2}
   .gesture-telemetry{grid-template-columns:1fr 1fr}
 }
+.brand-wrap{display:flex;align-items:center;gap:6px}
+.version-dropdown-wrap{position:relative;display:inline-flex;align-items:center}
+.version-badge-btn{font-family:var(--mono);font-size:11px;font-weight:700;background:var(--lime);color:#19271a;border:1px solid #9dc83e;padding:3px 9px;border-radius:99px;display:inline-flex;align-items:center;gap:3px;cursor:pointer;transition:transform .15s}
+.version-badge-btn:hover{transform:translateY(-1px)}
+.version-dropdown-menu{display:none;position:absolute;top:calc(100% + 8px);left:0;z-index:999;background:#1b2a23;border:1px solid #3c5445;border-radius:8px;box-shadow:0 14px 40px rgba(0,0,0,.4);width:260px;overflow:hidden;padding:6px 0}
+.version-dropdown-menu.show{display:block}
+.version-item{display:block;padding:9px 14px;color:#d5e2d6;text-decoration:none;font-size:12px;font-family:var(--head);transition:background .15s}
+.version-item b{font-family:var(--mono);color:var(--lime);background:#293d31;padding:2px 6px;border-radius:3px;margin-right:6px}
+.version-item:hover,.version-item.active{background:#2a4034;color:#fff}
+body.version-locked .version-dropdown-wrap{display:none!important}
 </style>
 </head>
 <body>
 <div class="scroll-line" id="scrollLine"></div>
 <header class="nav">
-  <a class="brand" href="#top" aria-label="ROBOVERSE v2 home">
-    <span class="brand-mark">R</span> robovers<span style="color:var(--blue)">e.</span>
-    <span class="version-badge">v2 SUITE</span>
-  </a>
+  <div class="brand-wrap">
+    <a class="brand" href="#top" aria-label="ROBOVERSE v2 home">
+      <span class="brand-mark">R</span> robovers<span style="color:var(--blue)">e.</span>
+    </a>
+    <div class="version-dropdown-wrap" id="versionDropdownWrap">
+      <button class="version-badge-btn" id="versionBadgeBtn" type="button" aria-expanded="false" aria-label="Select Suite Edition">v2 ▾</button>
+      <div class="version-dropdown-menu" id="versionDropdownMenu">
+        <a href="/" class="version-item" data-v="v1"><b>v1</b> Classic Discovery Pavilion</a>
+        <a href="/v2" class="version-item active" data-v="v2"><b>v2</b> Secure Suite & Kinematics</a>
+        <a href="/v3" class="version-item" data-v="v3"><b>v3</b> Teachable Vision Studio</a>
+        <a href="/v4" class="version-item" data-v="v4"><b>v4</b> LIDAR Radar & PID Tuner</a>
+        <a href="/v5" class="version-item" data-v="v5"><b>v5</b> Autonomous Racing & Firmware</a>
+      </div>
+    </div>
+  </div>
   <nav class="nav-links" id="navLinks" aria-label="Main navigation">
     <a href="#vision">Vision Lab</a>
     <a href="#gestures">Gesture Arena</a>
@@ -500,6 +521,20 @@ section{padding:clamp(64px,8vw,110px) 0;position:relative}
         <p style="font-size:11px;color:#a2b3a4;">Commit encrypted records directly to a GitHub dataset branch.</p>
         <input type="password" id="ghToken" class="admin-input" placeholder="GitHub Personal Access Token (repo scope)">
         <input type="text" id="ghRepo" class="admin-input" placeholder="Target Repo (e.g. bhavyakumar-dev/RAI-CareerFair)" value="bhavyakumar-dev/RAI-CareerFair" style="margin-top:6px;">
+
+        <div class="field feature-admin" style="margin-top:14px;">
+          <label for="adminVersionLock" style="color:var(--lime);font-weight:700;">Locked Suite Edition</label>
+          <select id="adminVersionLock" class="admin-input" style="cursor:pointer;margin-top:4px;">
+            <option value="dynamic">Dynamic (Show Version Switcher)</option>
+            <option value="v1">Lock to v1 (Classic Discovery)</option>
+            <option value="v2">Lock to v2 (Secure Suite & Kinematics)</option>
+            <option value="v3">Lock to v3 (Teachable Vision Studio)</option>
+            <option value="v4">Lock to v4 (LIDAR Radar & PID Tuner)</option>
+            <option value="v5">Lock to v5 (Autonomous Racing & Blueprints)</option>
+          </select>
+          <p style="font-size:11px;color:#a2b3a4;margin-top:4px;">When locked, the switcher badge is hidden from visitors and strictly displays the chosen edition.</p>
+        </div>
+
         <button class="button lime" id="saveAdminSettings" style="margin-top:16px;">Save Console Settings</button>
         <p id="adminStatus" style="font-size:11px;color:#c9f36a;margin-top:8px;"></p>
       </div>
@@ -1167,20 +1202,80 @@ $$('.filter-tag').forEach(b=>b.onclick=()=>{
 });
 
 // Admin Drawer Logic
+let adminClicks=0, adminTimer;
+$('.brand').addEventListener('click',e=>{
+  if(e.detail>1) return;
+  adminClicks++;
+  clearTimeout(adminTimer);
+  adminTimer=setTimeout(()=>adminClicks=0,1600);
+  if(adminClicks>=5){
+    e.preventDefault();
+    adminClicks=0;
+    $('#adminDrawer').classList.add('show');
+    $('#adminDrawer').scrollIntoView({behavior:'smooth'});
+  }
+});
+
 $('#adminSecretLink').onclick=e=>{
   e.preventDefault();
   $('#adminDrawer').classList.toggle('show');
   $('#adminDrawer').scrollIntoView({behavior:'smooth'});
 };
+
+function applyVersionLock(lock){
+  if(lock&&lock!=='dynamic'){
+    document.body.classList.add('version-locked');
+    const targetUrl=lock==='v1'?'/':`/${lock}`;
+    if(location.pathname!==targetUrl&&location.pathname!==targetUrl+'.html'&&location.pathname!==targetUrl+'/'){
+      location.href=targetUrl;
+    }
+  }else{
+    document.body.classList.remove('version-locked');
+  }
+}
+
+function loadAdminSettings(){
+  const lock=sget('roboLockedVersion','dynamic');
+  if($('#adminVersionLock')) $('#adminVersionLock').value=lock;
+  applyVersionLock(lock);
+  if(sget('roboPassphrase')) $('#adminPassphrase').value=sget('roboPassphrase');
+  if(sget('roboTgToken')) $('#tgBotToken').value=sget('roboTgToken');
+  if(sget('roboTgChat')) $('#tgChatId').value=sget('roboTgChat');
+  if(sget('roboGhToken')) $('#ghToken').value=sget('roboGhToken');
+  if(sget('roboGhRepo')) $('#ghRepo').value=sget('roboGhRepo');
+}
+
 $('#saveAdminSettings').onclick=()=>{
+  const lock=$('#adminVersionLock')?.value||'dynamic';
+  sset('roboLockedVersion',lock);
   sset('roboPassphrase',$('#adminPassphrase').value.trim()||'Roboverse-Secret-Key-2026');
   sset('roboTgToken',$('#tgBotToken').value.trim());
   sset('roboTgChat',$('#tgChatId').value.trim());
   sset('roboGhToken',$('#ghToken').value.trim());
   sset('roboGhRepo',$('#ghRepo').value.trim());
-  $('#adminStatus').textContent='Settings & master cryptographic key saved locally.';
-  toast('Admin settings and master key updated.');
+  applyVersionLock(lock);
+  $('#adminStatus').textContent='Settings, version lock & master cryptographic key saved locally.';
+  toast('Admin settings and version lock updated.');
 };
+
+// Version Switcher Dropdown
+const vBtn=$('#versionBadgeBtn'), vMenu=$('#versionDropdownMenu');
+if(vBtn&&vMenu){
+  vBtn.onclick=e=>{
+    e.stopPropagation();
+    vMenu.classList.toggle('show');
+    vBtn.setAttribute('aria-expanded',vMenu.classList.contains('show')?'true':'false');
+  };
+  document.addEventListener('click',e=>{
+    if(!e.target.closest('#versionDropdownWrap')) vMenu.classList.remove('show');
+  });
+}
+
+// Background Model Pre-Warming
+window.addEventListener('DOMContentLoaded',()=>{
+  setTimeout(()=>{ensureVisionModels().catch(()=>{});},350);
+  loadAdminSettings();
+});
 
 // Load saved vault on boot
 try{encryptedDatasetVault=JSON.parse(sget('roboLocalVault','[]'));}catch(e){}
