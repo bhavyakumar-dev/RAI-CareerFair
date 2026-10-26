@@ -13,7 +13,9 @@ Every subsequent edition cumulatively inherits every single feature of previous 
    - Real numerical age and gender estimation via **Face-API `AgeGenderNet`** (`~17 years`, `~24 years`).
    - 4 engineering simulation games, career quiz, college pathway directory, and roadmap planner.
    - Background neural pre-warming upon site visit for zero-lag detection.
-   - Admin site control room with Suite Version Lock (`Dynamic`, `v1`, `v2`, `v3`, `v4`, `v5`).
+   - **Big Screen Spectator Mode (`[ 📺 Big Screen ]`)**: Projector-ready high-visibility display with oversized bounding boxes and giant classification callouts.
+   - **Diagnostic Incident System (`[ 🛠️ Troubleshoot & Support ]`)**: Generates unique support tickets (`ROBO-ERR-XXXX`) with camera footage snapshots and error telemetry for supervisor debugging.
+   - Admin site control room with Suite Version Lock (`Dynamic`, `v1`, `v2`, `v3`, `v4`, `v5`) and **Incident Footage & Telemetry Inspector**.
    - Experimental laptop relay ping (`http://127.0.0.1:8765`).
 
 2. **v2 — Secure Suite & Kinematics (`/v2`)**:
@@ -22,7 +24,7 @@ Every subsequent edition cumulatively inherits every single feature of previous 
    - **Live Broadcast Video Recorder**: WebM broadcast stream capture with lower-third telemetry and relay forwarding.
    - **Interactive AI Hand-Gesture Rover & Arm Arena**: Steer a simulated rover and clamp robotic grippers in real-time using webcam hand gestures or touch/mouse.
    - **Global Robotics Competitions Directory**: Searchable, filterable calendar covering WRO, FIRST FRC/FTC, VEX, RoboCup, NASA Lunabotics, University Rover Challenge, and Technoxian.
-   - **Terms of Service & Privacy Policy**: Dedicated modal sheets detailing student data protection and ethical AI use.
+   - **Terms of Service & Privacy Policy**: Dedicated modal sheets detailing student data protection, diagnostic telemetry, and ethical AI use.
 
 3. **v3 — Teachable Vision Studio (`/v3`)**:
    - *Everything in v2*, plus:
@@ -49,10 +51,42 @@ Every subsequent edition cumulatively inherits every single feature of previous 
 
 ---
 
+## Big Screen Projector Mode & Diagnostic Support
+
+### 📺 Big Screen Spectator Mode
+Clicking **`[ 📺 Big Screen ]`** in any edition opens a high-visibility, full-screen spectator HUD:
+- **Massive Camera Viewport**: Sharp rendering optimized for smartboards, auditorium projectors, and exhibition kiosks.
+- **Oversized Detection Bounding Boxes**: Neon-bordered bounding rectangles with high-contrast labels legible from across the room.
+- **Primary Classification Callout**: Displays top recognized object and confidence percentage (e.g. `98.7% LAPTOP`) in large display typography.
+- **Live Stream Ticker**: Scrolling sidebar of active detections and real-time 30 FPS telemetry.
+- **Controls**: 1-click fullscreen toggle (`⛶ Fullscreen`) or press `Escape` / `✕ Exit Big Screen` to dismiss.
+
+### 🛠️ Diagnostic Incident Support & Video Footage Capture
+When a user encounters a defect or clicks **`[ 🛠️ Troubleshoot & Support ]`**:
+1. A unique, human-readable ticket code is generated: `ROBO-ERR-XXXX` (or `ROBO-HELP-XXXX`).
+2. An on-device diagnostic bundle is assembled containing:
+   - Camera video frame snapshot at the time of the event
+   - System error stack traces and unhandled rejection logs
+   - Recent model classification history and bounding box outputs
+   - Browser device parameters, screen resolution, and WebGL readiness
+3. The bundle is saved locally in `localStorage` under `robo_incident_<CODE>`. If an administrator has configured a GitHub personal access token and target repository in the Site Control Room, the bundle is automatically committed to `diagnostics/<CODE>.json` on GitHub.
+4. **Admin Footage Inspector**: Supervisors can open the **Site Control Room** (5 clicks on the brand logo or footer link), enter the visitor's Support Code into the **Diagnostic Incident & Video Footage Inspector**, and instantly view the exact camera snapshot, error trace, and live classification state.
+
+---
+
+## Legal Compliance, Terms of Service & Privacy Policy
+
+Both the **Terms of Service** and **Privacy & Ethics Policy** have been updated with explicit legal protections:
+- **Section 4.3 (Diagnostic Support & Error Telemetry)**: Explicitly discloses that Support Codes (`ROBO-ERR-XXXX`) and diagnostic camera snapshots are stored solely for technical fault diagnosis and platform reliability.
+- **Section 3.2 (Support Diagnostics & Video Snapshot Retention)**: Guarantees that diagnostic snapshots are never ingested into facial recognition databases, cross-referenced with personal identities, or sold to third parties.
+- **Section 3.3 (Data Subject Rights & Deletion)**: Outlines user rights to immediately purge any diagnostic ticket locally or through the administrator console.
+
+---
+
 ## Universal Version Switcher & Admin Control Room
 
 - **Brand Switcher Badge**: Every edition displays a sleek `[v ▾]` badge directly beside the `roboverse.` brand mark. Clicking it opens a dropdown allowing instant navigation between **v1, v2, v3, v4, and v5**.
-- **Admin Lock Protection**: Secret 5-click easter egg on the brand mark or the footer secret link opens the **Site Control Room**. Administrators can set **Locked Suite Edition** to lock the website to a single edition (e.g. `Lock to v3`). When locked, the switcher badge is hidden from visitors and any foreign URL automatically redirects to the chosen version.
+- **Admin Lock Protection**: Secret 5-click easter egg on the brand mark or footer link opens the **Site Control Room**. Administrators can set **Locked Suite Edition** to lock the website to a single edition (e.g. `Lock to v3`). When locked, the switcher badge is hidden from visitors and any foreign URL automatically redirects to the chosen version.
 
 ---
 
