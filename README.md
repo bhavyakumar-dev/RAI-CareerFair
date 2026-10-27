@@ -15,7 +15,7 @@ Every subsequent edition cumulatively inherits every single feature of previous 
    - Background neural pre-warming upon site visit for zero-lag detection.
    - **Big Screen Spectator Mode (`[ 📺 Big Screen ]`)**: Projector-ready high-visibility display with oversized bounding boxes and giant classification callouts.
    - **Diagnostic Incident System (`[ 🛠️ Troubleshoot & Support ]`)**: Generates unique support tickets (`ROBO-ERR-XXXX`) with camera footage snapshots and error telemetry for supervisor debugging.
-   - Admin site control room with Suite Version Lock (`Dynamic`, `v1`, `v2`, `v3`, `v4`, `v5`) and **Incident Footage & Telemetry Inspector**.
+   - Admin site control room with Suite Version Lock (`Dynamic`, `v1`, `v2`, `v3`, `v4`, `v5`, `v6`) and **Incident Footage & Telemetry Inspector**.
    - Experimental laptop relay ping (`http://127.0.0.1:8765`).
 
 2. **v2 — Secure Suite & Kinematics (`/v2`)**:
@@ -48,6 +48,24 @@ Every subsequent edition cumulatively inherits every single feature of previous 
      - **ESP32 FreeRTOS (`.cpp`)**: Dual-core architecture pinning vision telemetry to Core 0 and PID motor loop to Core 1.
      - **Raspberry Pi Pico / MicroPython (`.py`)**: PWM motor channels and ultrasonic interrupt routines.
    - Hardware Pinout Schematic & Bill of Materials table.
+
+6. **v6 — Robotics & AI Theatre & YOLOv8 Neural Edge Lab (`/v6`)**:
+   - *Everything in previous versions + specialized Theatre & YOLOv8 platform (`files(4)`)*:
+   - **3D Theatre Hero Robot**: Rendered via Three.js r128 with glowing orbital rings, cosmic dust particles, and smooth pointer tracking (`scene.js`).
+   - **Configured In-Browser YOLOv8 Model**: Uses **ONNX Runtime Web** (`onnxruntime-web@1.17.1`) with `yolov8n.onnx` (640x640 input, 80 COCO classes, Non-Maximum Suppression post-processing, bounding boxes with percentage confidence).
+   - **Three-Engine Vision Workbench**:
+     - *Objects*: High-precision YOLOv8 neural detection (with seamless COCO-SSD fallback).
+     - *Faces*: Face-API `tinyFaceDetector` + `ageGenderNet` for numerical age/gender estimates.
+     - *Edges*: Classical computer vision using **OpenCV Canny Edge Detection** (`cv.Canny`).
+   - **Teachable AI Machine**: 2-class burst training using MobileNet embeddings and KNN-Classifier.
+   - **Engineering Labs & Pathfinding**:
+     - *Paths*: 12 careers, 8 Indian engineering degrees, 6 international routes.
+     - *Quiz*: 6-question engineering personality profiler.
+     - *Maze*: Interactive robot route planner comparing A*, BFS, and DFS search algorithms.
+     - *Sensors*: Budgeted mission builder covering payload and telemetry constraints.
+     - *Logic*: Pattern challenge puzzles with bonus timers.
+     - *School Leaderboard*: Gamified point tracker aggregating scores across all missions.
+   - **Full Big Screen Spectator Mode & Troubleshoot Incident Ticketing**: Includes the high-contrast projector HUD, Support Code generation, camera snapshot capture, and admin incident inspection.
 
 ---
 
@@ -85,8 +103,8 @@ Both the **Terms of Service** and **Privacy & Ethics Policy** have been updated 
 
 ## Universal Version Switcher & Admin Control Room
 
-- **Brand Switcher Badge**: Every edition displays a sleek `[v ▾]` badge directly beside the `roboverse.` brand mark. Clicking it opens a dropdown allowing instant navigation between **v1, v2, v3, v4, and v5**.
-- **Admin Lock Protection**: Secret 5-click easter egg on the brand mark or footer link opens the **Site Control Room**. Administrators can set **Locked Suite Edition** to lock the website to a single edition (e.g. `Lock to v3`). When locked, the switcher badge is hidden from visitors and any foreign URL automatically redirects to the chosen version.
+- **Brand Switcher Badge**: Every edition displays a sleek `[v ▾]` badge directly beside the brand mark. Clicking it opens a dropdown allowing instant navigation between **v1, v2, v3, v4, v5, and v6**.
+- **Admin Lock Protection**: Secret 5-click easter egg on the brand mark or footer link opens the **Site Control Room**. Administrators can set **Locked Suite Edition** to lock the website to a single edition (e.g. `Lock to v6`). When locked, the switcher badge is hidden from visitors and any foreign URL automatically redirects to the chosen version.
 
 ---
 
