@@ -1,0 +1,685 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#111319">
+<title>Open Lab: Robotics & AI Suite (v7)</title>
+<meta name="description" content="Explore robotics and AI careers. Train a model, plan a robot route, test your YOLOv8 vision and find the engineer you could become.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/shared/rai-components.css">
+<link rel="stylesheet" href="/v7/styles.css">
+<script defer src="/shared/rai-data.js"></script>
+<script defer src="/shared/rai-core.js"></script>
+<script defer src="/shared/rai-games.js"></script>
+<script defer src="/shared/rai-vision.js"></script>
+<script defer src="/shared/rai-extras.js"></script>
+</head>
+<body>
+<header class="site-header" id="top">
+  <div class="brand-wrap">
+    <div class="brand" data-admin-tap title="Tap 5 times for Site Control Room">
+      <span class="brand-mark" aria-hidden="true">RA</span>
+      <span class="brand-name">open lab<small>The robotics and AI lab</small></span>
+    </div>
+    <div class="version-dropdown-wrap" id="versionDropdownWrap">
+      <button class="version-badge-btn" id="versionBadgeBtn" type="button" aria-expanded="false" aria-label="Select Suite Edition">v7 ▾</button>
+      <div class="version-dropdown-menu" id="versionDropdownMenu">
+        <a href="/" class="version-item" data-v="v1"><b>v1</b> Classic Discovery Pavilion</a>
+        <a href="/v2" class="version-item" data-v="v2"><b>v2</b> Secure Suite & Kinematics</a>
+        <a href="/v3" class="version-item" data-v="v3"><b>v3</b> Teachable Vision Studio</a>
+        <a href="/v4" class="version-item" data-v="v4"><b>v4</b> LIDAR Radar & PID Tuner</a>
+        <a href="/v5" class="version-item" data-v="v5"><b>v5</b> Autonomous Racing & Firmware</a>
+        <a href="/v6" class="version-item" data-v="v6"><b>v6</b> Robotics Theatre & YOLOv8 Lab</a>
+        <a href="/v7" class="version-item active" data-v="v7"><b>v7</b> Open Lab & Career Roadmap</a>
+      </div>
+    </div>
+  </div>
+  <span class="school" data-school>Kanakia International School, Mira Road</span>
+  <div class="header-right">
+    <span class="pts"><b data-points>0</b> pts</span>
+    <a class="head-cta" data-feature="paths" href="#paths">Explore paths &#8600;</a>
+  </div>
+</header>
+
+<main>
+  <section class="hero dark" id="hero" data-feature="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <p class="kicker">Your next chapter starts here</p>
+        <h1>Build machines that notice, decide and move.</h1>
+        <p class="lede">Not just for exams. For the robots you design, the models you train and the problems you choose to solve.</p>
+        <div class="row">
+          <a class="btn" href="#vision">Try the vision lab &#8599;</a>
+          <a class="btn alt" href="#paths">See what you could become &#8595;</a>
+        </div>
+        <p class="fine">Explore. Build. Test. Made for curious students in Class X and beyond.</p>
+      </div>
+      <div class="hero-art" aria-hidden="true">
+        <svg viewBox="0 0 320 320">
+          <rect x="30" y="30" width="260" height="260" rx="40" fill="#b5a6ff"/>
+          <rect x="82" y="78" width="156" height="118" rx="24" fill="#fffdf7" stroke="#111319" stroke-width="6"/>
+          <circle cx="126" cy="130" r="17" fill="#111319"/><circle cx="194" cy="130" r="17" fill="#111319"/>
+          <circle cx="131" cy="125" r="5" fill="#ff6b3d"/><circle cx="199" cy="125" r="5" fill="#ff6b3d"/>
+          <rect x="122" y="168" width="76" height="10" rx="5" fill="#111319"/>
+          <rect x="150" y="40" width="20" height="38" fill="#111319"/><circle cx="160" cy="38" r="14" fill="#ff6b3d"/>
+          <rect x="96" y="214" width="128" height="52" rx="14" fill="#c9e5cf" stroke="#111319" stroke-width="6"/>
+        </svg>
+        <span class="sticker s1">YOLO</span>
+        <span class="sticker s2">OpenCV</span>
+        <span class="sticker s3">A*</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="marquee" aria-hidden="true" data-feature="hero">
+    <div class="track">
+      <span>ROBOTICS &nbsp;&#10035;&nbsp; MACHINE LEARNING &nbsp;&#10035;&nbsp; COMPUTER VISION &nbsp;&#10035;&nbsp; EMBEDDED SYSTEMS &nbsp;&#10035;&nbsp; CONTROL &nbsp;&#10035;&nbsp; AI SAFETY &nbsp;&#10035;&nbsp;</span>
+      <span>ROBOTICS &nbsp;&#10035;&nbsp; MACHINE LEARNING &nbsp;&#10035;&nbsp; COMPUTER VISION &nbsp;&#10035;&nbsp; EMBEDDED SYSTEMS &nbsp;&#10035;&nbsp; CONTROL &nbsp;&#10035;&nbsp; AI SAFETY &nbsp;&#10035;&nbsp;</span>
+    </div>
+  </div>
+
+  <section class="band paper" id="why">
+    <div class="wrap">
+      <p class="kicker">01 / The why</p>
+      <h2>AI is the brain. Robotics is the body.</h2>
+      <p class="lede">A robot senses the world, decides what to do, then acts. AI turns raw signals into predictions. Every game below is a small model of one of those three steps.</p>
+      <div class="trio">
+        <p><b>01</b>Sense<span>Cameras and sensors turn the world into numbers.</span></p>
+        <p><b>02</b>Decide<span>Models and planners pick the next move.</span></p>
+        <p><b>03</b>Act<span>Motors and controllers carry it out safely.</span></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="band mint" id="paths" data-feature="paths">
+    <div class="wrap">
+      <p class="kicker">02 / Career atlas</p>
+      <h2>Where can robots and models take you?</h2>
+      <p class="lede">Browse twelve jobs, eight Indian routes and six ways to study abroad. These are exploration guides, not fixed rules.</p>
+      <div data-mount="paths"></div>
+    </div>
+  </section>
+
+  <section class="band lilac" id="quiz" data-feature="quiz">
+    <div class="wrap narrow">
+      <p class="kicker">03 / Find your fit</p>
+      <h2>Follow your curiosity.</h2>
+      <p class="lede">Six questions, no perfect answer. You get three engineering directions to investigate.</p>
+      <div data-mount="quiz"></div>
+    </div>
+  </section>
+
+  <section class="band paper" id="plan" data-feature="plan">
+    <div class="wrap narrow">
+      <p class="kicker">04 / Your roadmap</p>
+      <h2>Turn a big goal into next steps.</h2>
+      <p class="lede">Choose a career and what you have at home. Get a checklist that fits around school.</p>
+      <div data-mount="plan"></div>
+    </div>
+  </section>
+
+  <section class="band sky" id="maze" data-feature="maze">
+    <div class="wrap narrow">
+      <p class="kicker">05 / Robot route</p>
+      <h2>Plan a path. Compare the search.</h2>
+      <p class="lede">Draw walls, then run three search methods on the same map.</p>
+      <div data-mount="maze"></div>
+    </div>
+  </section>
+
+  <section class="band paper" id="sensors" data-feature="sensors">
+    <div class="wrap narrow">
+      <p class="kicker">06 / Build a robot</p>
+      <h2>Pick parts for a mission.</h2>
+      <p class="lede">Stay inside the budget and cover every need.</p>
+      <div data-mount="sensors"></div>
+    </div>
+  </section>
+
+  <section class="band lilac" id="logic" data-feature="logic">
+    <div class="wrap narrow">
+      <p class="kicker">07 / Pattern sprint</p>
+      <h2>Spot the rule.</h2>
+      <p class="lede">Eight number puzzles. Quick answers earn a bonus.</p>
+      <div data-mount="logic"></div>
+    </div>
+  </section>
+
+  <section class="band paper" id="trainer" data-feature="trainer">
+    <div class="wrap narrow">
+      <p class="kicker">08 / Train a model</p>
+      <h2>Teach a computer to tell two things apart.</h2>
+      <p class="lede">Show it examples with your camera and watch it learn.</p>
+      <div data-mount="trainer"></div>
+    </div>
+  </section>
+
+  <section class="band dark" id="vision" data-feature="vision">
+    <div class="wrap narrow">
+      <p class="kicker">09 / Vision lab</p>
+      <h2>See what a vision model sees.</h2>
+      <p class="lede">Objects, faces and edges, live on your device with YOLOv8. A model's guess is a starting point, not a fact.</p>
+      <div data-mount="vision"></div>
+    </div>
+  </section>
+
+  <section class="band orange" id="leaderboard" data-feature="leaderboard">
+    <div class="wrap narrow">
+      <p class="kicker">10 / The practice board</p>
+      <h2>Progress is worth celebrating.</h2>
+      <p class="lede">Join with a nickname only. Your points from every game add up.</p>
+      <div data-mount="leaderboard"></div>
+    </div>
+  </section>
+
+  <section class="band paper" id="share" data-feature="share">
+    <div class="wrap narrow">
+      <p class="kicker">11 / Pass it on</p>
+      <h2>Good practice travels.</h2>
+      <p class="lede">Share this lab with a friend. Scan the code, try a challenge and explore a new path.</p>
+      <div data-mount="share"></div>
+    </div>
+  </section>
+
+  <section class="closing dark">
+    <div class="wrap narrow">
+      <h2>Make something that moves.</h2>
+      <p class="lede">The goal is not a perfect robot. It is a clearer version of the idea only you can bring.</p>
+      <a class="btn" href="#top">Start again &#8593;</a>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div>
+    <span>&copy; 2026 <span data-school>Kanakia International School, Mira Road</span> • Open Lab (v7)</span>
+    <div style="margin-top:8px;display:flex;gap:14px;font-size:12px;">
+      <button id="openTosBtn" style="background:transparent;border:0;color:var(--accent);cursor:pointer;text-decoration:underline;font-weight:700;">Terms of Service</button>
+      <button id="openPrivacyBtn" style="background:transparent;border:0;color:var(--accent);cursor:pointer;text-decoration:underline;font-weight:700;">Privacy & Ethics Policy</button>
+      <a href="#admin" id="adminSecretLink" style="color:var(--muted);text-decoration:none;">Control Room ⚙</a>
+    </div>
+  </div>
+  <span>Powered by <b>YOLOv8 Edge Neural Network</b> & WebAssembly</span>
+</footer>
+
+<!-- Admin Control Room Drawer -->
+<section class="admin-drawer" id="adminDrawer">
+  <div class="wrap">
+    <div style="display:flex;justify-content:space-between;align-items:center;border-bottom:2px solid var(--accent);padding-bottom:14px;">
+      <div>
+        <span style="font-family:monospace;font-size:11px;color:var(--accent);letter-spacing:0.08em;text-transform:uppercase;">SITE CONTROL ROOM</span>
+        <h2 style="margin:4px 0 0;color:#fff;">Version Lock & Incident Inspector</h2>
+      </div>
+      <button class="btn alt small" id="closeAdminBtn" type="button">Close</button>
+    </div>
+    <div class="admin-box">
+      <div>
+        <h3 style="color:var(--accent);margin-top:0;">Locked Suite Edition</h3>
+        <p style="font-size:12px;color:#c4cdc7;">Select whether visitors can freely switch editions via the [v ▾] badge or lock to a specific version.</p>
+        <select id="adminVersionLock" class="admin-input" style="margin-top:8px;">
+          <option value="dynamic">Dynamic (Show Version Switcher)</option>
+          <option value="v1">Lock to v1 (Classic Discovery Pavilion)</option>
+          <option value="v2">Lock to v2 (Secure Suite & Kinematics)</option>
+          <option value="v3">Lock to v3 (Teachable Vision Studio)</option>
+          <option value="v4">Lock to v4 (LIDAR Radar & PID Tuner)</option>
+          <option value="v5">Lock to v5 (Autonomous Racing & Blueprints)</option>
+          <option value="v6">Lock to v6 (Robotics Theatre & YOLOv8)</option>
+          <option value="v7">Lock to v7 (Open Lab & Career Roadmap)</option>
+        </select>
+        <button class="btn small" id="saveAdminLockBtn" style="margin-top:14px;">Save Version Lock</button>
+        <p id="adminStatusText" style="font-size:11px;color:var(--accent);margin-top:8px;"></p>
+      </div>
+      <div>
+        <h3 style="color:var(--accent);margin-top:0;">GitHub Dispatch Credentials (Optional)</h3>
+        <p style="font-size:12px;color:#c4cdc7;">Commit encrypted telemetry and support incident reports directly to your GitHub support repo.</p>
+        <input type="password" id="ghToken" class="admin-input" placeholder="GitHub Personal Access Token" style="margin-bottom:8px;">
+        <input type="text" id="ghRepo" class="admin-input" placeholder="Repo (e.g. bhavyakumar-dev/RAI-CareerFair)" value="bhavyakumar-dev/RAI-CareerFair">
+        <button class="btn alt small" id="saveGhCredsBtn" style="margin-top:14px;">Save Credentials</button>
+      </div>
+
+      <!-- Diagnostic Incident Inspector -->
+      <div style="grid-column:1/-1;border-top:1px dashed #3d4659;padding-top:16px;">
+        <h3 style="color:var(--accent);margin-top:0;">Diagnostic Incident & Video Footage Inspector</h3>
+        <p style="font-size:12px;color:#c4cdc7;margin-bottom:10px;">Look up any incident code generated when a visitor clicked Troubleshoot or experienced a model defect.</p>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+          <input type="text" id="adminLookupCode" class="admin-input" placeholder="Enter Support Code (e.g. ROBO-ERR-XXXX)" style="flex:1;min-width:200px;">
+          <button class="btn small" id="adminInspectBtn" type="button">Inspect Incident</button>
+          <button class="btn alt small" id="adminRefreshIncidentsBtn" type="button">Refresh List</button>
+        </div>
+        <div id="adminRecentIncidents" style="margin-top:8px;font-size:11px;font-family:monospace;color:var(--accent);"></div>
+        <div id="adminIncidentDetail" style="margin-top:12px;background:#0d0f14;border:2px solid var(--accent);border-radius:12px;padding:16px;display:none;"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Big Screen Overlay -->
+<div class="bigscreen-overlay" id="bigScreenOverlay" hidden>
+  <div class="bigscreen-topbar">
+    <div class="bigscreen-brand">
+      <span class="brand-mark" style="display:grid;place-items:center;width:32px;height:32px;background:var(--accent);color:#111319;border-radius:8px;font-weight:900;">RA</span>
+      <span>OPEN LAB <b>BIG SCREEN LIVE SPECTATOR (YOLOv8)</b></span>
+    </div>
+    <div class="bigscreen-metrics">
+      <span class="bigscreen-chip" id="bsFps">30.0 FPS</span>
+      <span class="bigscreen-chip" id="bsRes">640x480</span>
+      <span class="bigscreen-chip" style="color:#52e0c4;font-weight:700;">● YOLOv8 ONNX ACTIVE</span>
+    </div>
+    <div class="bigscreen-actions">
+      <button class="btn alt small" id="bsFullscreenToggle">⛶ Fullscreen</button>
+      <button class="btn small" id="bsClose">✕ Exit Big Screen</button>
+    </div>
+  </div>
+  <div class="bigscreen-stage">
+    <div class="bigscreen-video-box">
+      <canvas id="bigScreenCanvas"></canvas>
+    </div>
+    <div class="bigscreen-sidebar">
+      <div class="bs-primary-callout">
+        <div class="bs-callout-label">PRIMARY CLASSIFICATION</div>
+        <div class="bs-primary-val" id="bsPrimaryLabel">WAITING...</div>
+        <div class="bs-primary-conf" id="bsPrimaryConf">0.0%</div>
+      </div>
+      <div class="bs-secondary-box">
+        <div class="bs-callout-label">LIVE DETECTION STREAM</div>
+        <div class="bs-chips-stream" id="bsChipsStream">
+          <div class="bs-chip-row"><span>Ready for live detections</span><b style="color:#52e0c4;">STANDBY</b></div>
+        </div>
+      </div>
+      <div class="bs-footer-note">
+        <span>Open Lab Suite • YOLOv8</span>
+        <span>Press ESC to exit</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Legal & Troubleshoot Modal Backdrop -->
+<div class="modal-backdrop" id="genericModalBackdrop">
+  <div class="modal-box">
+    <button class="modal-close-btn" id="genericModalClose">✕</button>
+    <span id="genericModalLabel" style="font-family:monospace;font-size:11px;color:var(--accent);letter-spacing:0.08em;font-weight:bold;text-transform:uppercase;">NOTICE</span>
+    <h2 id="genericModalTitle" style="color:var(--ink);margin:6px 0 16px;">Title</h2>
+    <div id="genericModalBody"></div>
+  </div>
+</div>
+
+<script>
+// ==========================================
+// v7 Unified Runtime, Big Screen & Diagnostics
+// ==========================================
+window.latestDetectionSummary = { topLabel: 'None', topConf: 0, items: [] };
+const diagnosticLogBuffer = [];
+
+window.addEventListener('error', e => {
+  diagnosticLogBuffer.push({ type: 'error', msg: e.message, src: (e.filename || '') + ':' + (e.lineno || ''), time: new Date().toISOString() });
+});
+window.addEventListener('unhandledrejection', e => {
+  diagnosticLogBuffer.push({ type: 'rejection', msg: e.reason?.message || String(e.reason), time: new Date().toISOString() });
+});
+
+function openModal(title, body, label = 'OPEN LAB v7') {
+  document.getElementById('genericModalTitle').textContent = title;
+  document.getElementById('genericModalLabel').textContent = label;
+  document.getElementById('genericModalBody').innerHTML = body;
+  document.getElementById('genericModalBackdrop').classList.add('show');
+}
+function closeModal() {
+  document.getElementById('genericModalBackdrop').classList.remove('show');
+}
+document.getElementById('genericModalClose').onclick = closeModal;
+document.getElementById('genericModalBackdrop').onclick = e => {
+  if (e.target === document.getElementById('genericModalBackdrop')) closeModal();
+};
+
+const legalTosHtml = [
+  '<p>Welcome to <b>ROBOVERSE v7 (Open Lab & Career Roadmap)</b>. By accessing this laboratory, you agree to these Terms of Service:</p>',
+  '<ul>',
+  '  <li><b>Educational & Research Purpose:</b> This platform is provided strictly for educational exploration, roadmap planning, and STEM career exhibitions.</li>',
+  '  <li><b>On-Device Processing:</b> Computer vision models (including YOLOv8 and Face-API) execute 100% on-device in your web browser. No unauthorized camera recordings or facial embeddings are transmitted to remote servers.</li>',
+  '  <li><b>Diagnostic Support & Error Telemetry (§4.3):</b> When you click Troubleshoot or encounter a model defect, the system assigns a unique Support Code (e.g. <code>ROBO-ERR-XXXX</code>). A diagnostic camera frame snapshot, defect logs, and model state parameters are recorded to facilitate technical debugging by lab supervisors.</li>',
+  '  <li><b>Algorithmic Approximation:</b> Computer vision detections and age/gender estimates are statistical approximations from edge neural networks and must never be used to make formal evaluations about individuals.</li>',
+  '  <li><b>Consent:</b> Always obtain verbal permission before pointing camera devices toward fellow students, teachers, or attendees.</li>',
+  '</ul>',
+  '<p style="font-size:11px;color:#5e6878;">Kanakia International School • STEM Career Fair 2026</p>'
+].join('');
+
+const legalPrivacyHtml = [
+  '<p>Your privacy and ethical AI protections are built directly into <b>ROBOVERSE v7</b>:</p>',
+  '<ul>',
+  '  <li><b>Zero Ingestion Without Consent:</b> Camera streams process inside your device\'s WebGL / WASM memory space. No frames leave your browser unless you explicitly initiate a diagnostic troubleshooting ticket.</li>',
+  '  <li><b>Support Diagnostics & Video Snapshot Retention (§3.2):</b> Diagnostic footage captured via the Troubleshoot feature is tagged with an anonymous Incident Code. Diagnostic snapshots are captured solely to verify camera sensor alignment, lighting conditions, and model failure modes. They are never ingested into facial recognition systems or sold to third parties.</li>',
+  '  <li><b>Data Subject Rights & Deletion (§3.3):</b> Visitors may request the immediate deletion of any diagnostic ticket by providing their Incident Code to the system administrator or using the Control Room console.</li>',
+  '  <li><b>No Commercial Trackers:</b> We do not use third-party analytics scripts, cross-site advertising cookies, or fingerprinting beacons.</li>',
+  '</ul>',
+  '<p style="font-size:11px;color:#5e6878;">Compliant with student data protection standards and transparent responsible AI guidelines.</p>'
+].join('');
+
+document.getElementById('openTosBtn').onclick = () => openModal('Terms of Service & Code of Conduct', legalTosHtml, 'TERMS OF SERVICE');
+document.getElementById('openPrivacyBtn').onclick = () => openModal('Privacy & Data Protection Policy', legalPrivacyHtml, 'PRIVACY POLICY');
+
+// Version Switcher Dropdown
+const vBtn = document.getElementById('versionBadgeBtn'), vMenu = document.getElementById('versionDropdownMenu');
+if (vBtn && vMenu) {
+  vBtn.onclick = e => {
+    e.stopPropagation();
+    vMenu.classList.toggle('show');
+    vBtn.setAttribute('aria-expanded', vMenu.classList.contains('show') ? 'true' : 'false');
+  };
+  document.addEventListener('click', e => {
+    if (!e.target.closest('#versionDropdownWrap')) vMenu.classList.remove('show');
+  });
+}
+
+function applyVersionLock(lock) {
+  if (lock && lock !== 'dynamic') {
+    document.body.classList.add('version-locked');
+    const targetUrl = lock === 'v1' ? '/' : ('/' + lock);
+    if (location.pathname !== targetUrl && location.pathname !== targetUrl + '.html' && location.pathname !== targetUrl + '/') {
+      location.href = targetUrl;
+    }
+  } else {
+    document.body.classList.remove('version-locked');
+  }
+}
+applyVersionLock(localStorage.getItem('roboLockedVersion') || 'dynamic');
+
+// 5-Tap Brand Admin Easter Egg
+let adminClicks = 0, adminTimer;
+document.querySelector('[data-admin-tap]').addEventListener('click', e => {
+  if (e.detail > 1) return;
+  adminClicks++;
+  clearTimeout(adminTimer);
+  adminTimer = setTimeout(() => adminClicks = 0, 1600);
+  if (adminClicks >= 5) {
+    e.preventDefault();
+    adminClicks = 0;
+    openAdminDrawer();
+  }
+});
+document.getElementById('adminSecretLink').onclick = e => {
+  e.preventDefault();
+  openAdminDrawer();
+};
+document.getElementById('closeAdminBtn').onclick = () => {
+  document.getElementById('adminDrawer').classList.remove('show');
+};
+
+function openAdminDrawer() {
+  const d = document.getElementById('adminDrawer');
+  d.classList.add('show');
+  d.scrollIntoView({ behavior: 'smooth' });
+  const lock = localStorage.getItem('roboLockedVersion') || 'dynamic';
+  if (document.getElementById('adminVersionLock')) document.getElementById('adminVersionLock').value = lock;
+  renderRecentIncidentsList();
+}
+
+document.getElementById('saveAdminLockBtn').onclick = () => {
+  const lock = document.getElementById('adminVersionLock').value;
+  localStorage.setItem('roboLockedVersion', lock);
+  applyVersionLock(lock);
+  document.getElementById('adminStatusText').textContent = 'Version lock saved: ' + lock;
+};
+
+document.getElementById('saveGhCredsBtn').onclick = () => {
+  const tok = document.getElementById('ghToken').value.trim();
+  const repo = document.getElementById('ghRepo').value.trim();
+  if (tok) localStorage.setItem('roboGhToken', tok);
+  if (repo) localStorage.setItem('roboGhRepo', repo);
+  document.getElementById('adminStatusText').textContent = 'GitHub credentials saved locally.';
+};
+
+// Big Screen Viewer
+const bsOverlay = document.getElementById('bigScreenOverlay');
+const bsCanvas = document.getElementById('bigScreenCanvas');
+const bsCtx = bsCanvas ? bsCanvas.getContext('2d') : null;
+let bsLoopActive = false;
+let bsLastFrame = performance.now();
+
+window.openBigScreen = function() {
+  if (!bsOverlay) return;
+  bsOverlay.hidden = false;
+  bsLoopActive = true;
+  document.body.style.overflow = 'hidden';
+  runBigScreenLoop();
+};
+window.closeBigScreen = function() {
+  if (!bsOverlay) return;
+  bsOverlay.hidden = true;
+  bsLoopActive = false;
+  document.body.style.overflow = '';
+  if (document.fullscreenElement) document.exitFullscreen().catch(()=>{});
+};
+document.getElementById('bsClose').onclick = window.closeBigScreen;
+document.getElementById('bsFullscreenToggle').onclick = () => {
+  if (!document.fullscreenElement) {
+    document.documentElement.requestFullscreen().catch(()=>{});
+    document.getElementById('bsFullscreenToggle').textContent = '⛶ Windowed';
+  } else {
+    document.exitFullscreen().catch(()=>{});
+    document.getElementById('bsFullscreenToggle').textContent = '⛶ Fullscreen';
+  }
+};
+window.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && bsOverlay && !bsOverlay.hidden) window.closeBigScreen();
+});
+
+function runBigScreenLoop() {
+  if (!bsLoopActive) return;
+  const now = performance.now();
+  const fps = Math.round(1000 / (now - bsLastFrame || 1));
+  bsLastFrame = now;
+  if (document.getElementById('bsFps')) document.getElementById('bsFps').textContent = fps + ' FPS';
+
+  const v = document.querySelector('video.feed');
+  if (v && v.videoWidth && bsCanvas && bsCtx) {
+    if (bsCanvas.width !== v.videoWidth || bsCanvas.height !== v.videoHeight) {
+      bsCanvas.width = v.videoWidth;
+      bsCanvas.height = v.videoHeight;
+      if (document.getElementById('bsRes')) document.getElementById('bsRes').textContent = v.videoWidth + 'x' + v.videoHeight;
+    }
+    bsCtx.drawImage(v, 0, 0, bsCanvas.width, bsCanvas.height);
+
+    if (window.latestDetectionSummary && window.latestDetectionSummary.items) {
+      window.latestDetectionSummary.items.forEach(d => {
+        if (!d.bbox) return;
+        const [x, y, w, h] = d.bbox;
+        bsCtx.strokeStyle = '#ff6b3d';
+        bsCtx.lineWidth = 4;
+        bsCtx.strokeRect(x, y, w, h);
+
+        const label = (d.class || 'OBJECT').toUpperCase() + ' ' + Math.round((d.score || 0) * 100) + '%';
+        bsCtx.font = 'bold 18px "DM Sans", sans-serif';
+        const tw = bsCtx.measureText(label).width;
+        bsCtx.fillStyle = 'rgba(17, 19, 25, 0.85)';
+        bsCtx.fillRect(x, Math.max(0, y - 28), tw + 16, 26);
+        bsCtx.fillStyle = '#ff6b3d';
+        bsCtx.fillText(label, x + 8, Math.max(18, y - 9));
+      });
+    }
+
+    if (document.getElementById('bsPrimaryLabel')) {
+      document.getElementById('bsPrimaryLabel').textContent = window.latestDetectionSummary.topLabel || 'SEARCHING...';
+    }
+    if (document.getElementById('bsPrimaryConf')) {
+      document.getElementById('bsPrimaryConf').textContent = (window.latestDetectionSummary.topConf || 0) + '%';
+    }
+    if (document.getElementById('bsChipsStream') && window.latestDetectionSummary.items) {
+      document.getElementById('bsChipsStream').innerHTML = window.latestDetectionSummary.items.map(item => {
+        const name = (item.class || 'Item').toUpperCase();
+        const conf = Math.round((item.score || 0) * 100);
+        return '<div class="bs-chip-row"><span>' + name + '</span><b style="color:#52e0c4;">' + conf + '%</b></div>';
+      }).join('') || '<div class="bs-chip-row"><span>Awaiting detections...</span></div>';
+    }
+  }
+  requestAnimationFrame(runBigScreenLoop);
+}
+
+// Troubleshoot Incident Trigger
+function grabCameraSnapshot() {
+  const v = document.querySelector('video.feed');
+  if (!v || !v.videoWidth) return null;
+  const c = document.createElement('canvas');
+  c.width = Math.min(v.videoWidth, 640);
+  c.height = Math.min(v.videoHeight, 480);
+  const ctx = c.getContext('2d');
+  ctx.drawImage(v, 0, 0, c.width, c.height);
+  return c.toDataURL('image/jpeg', 0.82);
+}
+
+window.triggerTroubleshoot = function(forcedCode = null) {
+  const code = forcedCode || ('ROBO-ERR-' + Math.random().toString(36).substring(2, 7).toUpperCase());
+  const snapshotData = grabCameraSnapshot();
+
+  const report = {
+    code,
+    timestamp: new Date().toISOString(),
+    edition: document.title,
+    url: location.href,
+    userAgent: navigator.userAgent,
+    screen: window.innerWidth + 'x' + window.innerHeight,
+    recentErrors: diagnosticLogBuffer.slice(-8),
+    recentDetections: (window.latestDetectionSummary.items || []).slice(0, 10),
+    topClassification: window.latestDetectionSummary.topLabel || 'No detection active',
+    topConfidence: window.latestDetectionSummary.topConf || 0,
+    snapshot: snapshotData
+  };
+
+  localStorage.setItem('robo_incident_' + code, JSON.stringify(report));
+  try {
+    const list = JSON.parse(localStorage.getItem('robo_incident_index') || '[]');
+    list.unshift({ code, timestamp: report.timestamp, top: report.topClassification, hasSnap: !!snapshotData });
+    localStorage.setItem('robo_incident_index', JSON.stringify(list.slice(0, 25)));
+  } catch(e){}
+
+  const ghToken = localStorage.getItem('roboGhToken');
+  const ghRepo = localStorage.getItem('roboGhRepo') || 'bhavyakumar-dev/RAI-CareerFair';
+  if (ghToken && ghRepo) {
+    try {
+      const payloadStr = JSON.stringify(report, null, 2);
+      const b64 = btoa(unescape(encodeURIComponent(payloadStr)));
+      fetch('https://api.github.com/repos/' + ghRepo + '/contents/diagnostics/' + code + '.json', {
+        method: 'PUT',
+        headers: {
+          'Authorization': 'Bearer ' + ghToken,
+          'Content-Type': 'application/json',
+          'Accept': 'application/vnd.github.v3+json'
+        },
+        body: JSON.stringify({ message: 'Support incident report ' + code + ' [skip ci]', content: b64 })
+      }).catch(()=>{});
+    } catch(err){}
+  }
+
+  openModal('Troubleshoot & Support Ticket', [
+    '<div class="ticket-code-pill">',
+    '  <div>',
+    '    <span style="font-size:11px;color:#a4b3a8;display:block;">INCIDENT SUPPORT CODE</span>',
+    '    <span class="ticket-code-val">' + code + '</span>',
+    '  </div>',
+    '  <button class="btn small" id="copyIncidentCodeBtn">Copy Code</button>',
+    '</div>',
+    '<p style="font-size:13px;line-height:1.5;">Share this support code with your lab supervisor. System error logs and a camera footage snapshot have been recorded under this code for debugging.</p>',
+    snapshotData ? (
+      '<div style="font-size:11px;font-weight:700;color:var(--accent);margin-top:10px;">CAPTURED DIAGNOSTIC FOOTAGE SNAPSHOT:</div>' +
+      '<div class="thumb-preview-box"><img src="' + snapshotData + '" alt="Diagnostic Snapshot Frame"></div>'
+    ) : '<p style="font-size:11px;color:#5e6878;">(Camera was inactive during this event; system logs recorded.)</p>',
+    '<div style="background:rgba(0,0,0,0.06);border:1px solid rgba(0,0,0,0.12);border-radius:8px;padding:10px;margin-top:12px;font-size:11px;color:#555;line-height:1.5;">',
+    '  <b>Legal & Privacy Notice (§4.3):</b> This diagnostic record contains browser telemetry, runtime defect logs, and an on-device camera snapshot strictly for fault isolation and hardware troubleshooting. No biometric facial models or ad tracking are generated.',
+    '</div>',
+    '<div style="display:flex;gap:8px;margin-top:14px;flex-wrap:wrap;">',
+    '  <button class="btn small" id="downloadIncidentBtn">Download Diagnostic JSON</button>',
+    '  <button class="btn alt small" id="closeIncidentModalBtn">Close</button>',
+    '</div>'
+  ].join(''), 'DIAGNOSTIC SUPPORT');
+
+  setTimeout(() => {
+    if (document.getElementById('copyIncidentCodeBtn')) {
+      document.getElementById('copyIncidentCodeBtn').onclick = () => {
+        navigator.clipboard.writeText(code).then(() => alert('Support Code copied: ' + code));
+      };
+    }
+    if (document.getElementById('downloadIncidentBtn')) {
+      document.getElementById('downloadIncidentBtn').onclick = () => {
+        const blob = new Blob([JSON.stringify(report, null, 2)], { type: 'application/json' });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = code + '-diagnostic.json';
+        a.click();
+      };
+    }
+    if (document.getElementById('closeIncidentModalBtn')) document.getElementById('closeIncidentModalBtn').onclick = closeModal;
+  }, 50);
+};
+
+// Admin Incident Inspector Logic
+function renderRecentIncidentsList() {
+  const container = document.getElementById('adminRecentIncidents');
+  if (!container) return;
+  try {
+    const list = JSON.parse(localStorage.getItem('robo_incident_index') || '[]');
+    if (!list.length) {
+      container.innerHTML = '<i>No recent support incidents logged in this browser.</i>';
+      return;
+    }
+    container.innerHTML = '<b>Recent Incident Tickets:</b> ' + list.slice(0, 6).map(it => {
+      return '<a href="javascript:void(0)" onclick="inspectIncident(&quot;' + it.code + '&quot;)" style="color:var(--accent);margin-right:8px;text-decoration:underline;">' + it.code + '</a>';
+    }).join('');
+  } catch(e){}
+}
+
+window.inspectIncident = function(code) {
+  if (document.getElementById('adminLookupCode')) document.getElementById('adminLookupCode').value = code;
+  loadAndDisplayIncident(code);
+};
+
+function loadAndDisplayIncident(code) {
+  const detailEl = document.getElementById('adminIncidentDetail');
+  if (!detailEl) return;
+  code = code.trim().toUpperCase();
+  const raw = localStorage.getItem('robo_incident_' + code);
+  if (!raw) {
+    detailEl.style.display = 'block';
+    detailEl.innerHTML = '<span style="color:#ff7a59;">No local diagnostic record found for <b>' + code + '</b>.</span>';
+    return;
+  }
+  try {
+    const data = JSON.parse(raw);
+    detailEl.style.display = 'block';
+    detailEl.innerHTML = [
+      '<div style="display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(255,255,255,0.1);padding-bottom:8px;">',
+      '  <h4 style="margin:0;color:var(--accent);font-size:15px;">Incident Code: ' + data.code + '</h4>',
+      '  <span style="font-size:11px;color:#a4b3a8;">' + new Date(data.timestamp).toLocaleString() + '</span>',
+      '</div>',
+      '<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:12px;">',
+      '  <div>',
+      '    <span style="font-size:11px;color:#a4b3a8;display:block;">CAPTURED CAMERA FOOTAGE SNAPSHOT:</span>',
+      data.snapshot ? (
+        '    <div class="thumb-preview-box" style="margin-top:6px;"><img src="' + data.snapshot + '" alt="Incident Snapshot"></div>'
+      ) : '    <p style="font-size:11px;color:#94a3b8;">No camera frame was available at time of event.</p>',
+      '  </div>',
+      '  <div style="font-size:11px;line-height:1.6;font-family:monospace;">',
+      '    <div><b>Edition:</b> ' + (data.edition || 'Unknown') + '</div>',
+      '    <div><b>Screen:</b> ' + (data.screen || 'N/A') + '</div>',
+      '    <div><b>Primary Label:</b> <span style="color:var(--accent);">' + data.topClassification + ' (' + data.topConfidence + '%)</span></div>',
+      '    <div style="margin-top:8px;"><b>Recent Defect Logs:</b></div>',
+      '    <pre style="background:#000;padding:6px;border-radius:4px;overflow-x:auto;max-height:80px;color:#ff7a59;margin:4px 0;">' + (data.recentErrors && data.recentErrors.length ? JSON.stringify(data.recentErrors, null, 2) : 'No unhandled exceptions logged.') + '</pre>',
+      '  </div>',
+      '</div>'
+    ].join('');
+  } catch(err) {
+    detailEl.innerHTML = '<span style="color:#ff7a59;">Failed to parse incident data: ' + err.message + '</span>';
+  }
+}
+
+document.getElementById('adminInspectBtn').onclick = () => {
+  const code = document.getElementById('adminLookupCode')?.value.trim();
+  if (code) loadAndDisplayIncident(code);
+};
+document.getElementById('adminRefreshIncidentsBtn').onclick = renderRecentIncidentsList;
+</script>
+
+</body>
+</html>

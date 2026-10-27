@@ -19,6 +19,9 @@
     'models/yolov8n.onnx',
     '/yolov8n.onnx',
     './yolov8n.onnx',
+    '/v7/models/yolov8n.onnx',
+    '../v7/yolov8n.onnx',
+    'v7/yolov8n.onnx',
     '../v6/yolov8n.onnx',
     'v6/yolov8n.onnx'
   ];

@@ -1,0 +1,53 @@
+[hidden]{display:none!important}
+.row{display:flex;flex-wrap:wrap;gap:10px;margin:14px 0;align-items:center}
+.btn{display:inline-block;padding:12px 22px;border:2px solid var(--ink);border-radius:var(--pill,999px);background:var(--ink);color:var(--paper);font-weight:700;text-decoration:none;transition:transform .15s,background .15s}
+.btn:hover{transform:translateY(-2px);background:var(--accent);border-color:var(--accent);color:var(--on-accent,var(--ink))}
+.btn.alt{background:transparent;color:inherit;border-color:currentColor}
+.btn.alt:hover{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.btn:disabled{opacity:.4;cursor:not-allowed;transform:none}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px}
+.chip,.choice{padding:9px 16px;border:2px solid var(--ink);border-radius:var(--radius,14px);background:var(--surface);color:var(--ink);font-weight:500;text-align:left}
+.chip{border-radius:999px}
+.chip[aria-pressed=true],.choice[aria-pressed=true]{background:var(--ink);color:var(--paper)}
+.choice:hover{background:var(--accent);color:var(--on-accent,var(--ink))}
+.choices{display:grid;gap:10px;margin-top:14px}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
+.parts{grid-template-columns:repeat(auto-fill,minmax(150px,1fr))!important;gap:10px!important}
+.card,.panel{background:var(--surface);color:var(--ink);border:2px solid var(--ink);border-radius:var(--radius,18px);padding:20px}
+.panel{margin-top:14px}
+.card:nth-child(4n+1){box-shadow:6px 6px 0 var(--c1)}
+.card:nth-child(4n+2){box-shadow:6px 6px 0 var(--c2)}
+.card:nth-child(4n+3){box-shadow:6px 6px 0 var(--c3)}
+.card:nth-child(4n){box-shadow:6px 6px 0 var(--c4)}
+.card h3,.panel h3{margin:0 0 6px}
+.card p{margin:6px 0}
+.card a{font-weight:700}
+.tag{font-size:.85rem;color:var(--muted)}
+.stat{font-weight:700;margin:12px 0}
+.note{font-size:.92rem;color:var(--muted);margin:10px 0}
+.seq{font-size:clamp(1.5rem,5vw,2.2rem);letter-spacing:.03em}
+.needs{list-style:none;padding:0;margin:16px 0;display:grid;gap:4px}
+.needs .ok::before{content:"\2713  ";color:#1f7a4d;font-weight:700}
+.needs .miss::before{content:"\2022  ";color:#d94a24;font-weight:700}
+.steps{padding-left:20px;display:grid;gap:6px}
+.steps li{padding-left:4px}
+.maze{width:100%;max-width:420px;aspect-ratio:1;border:2px solid var(--ink);border-radius:12px;touch-action:none;display:block;--maze-bg:#fffdf7;--maze-wall:#17191f;--maze-seen:#b8d9ed;--maze-path:#ff6b3d;--maze-start:#2f9e6b;--maze-goal:#7a4dff}
+.stage{position:relative;width:100%;max-width:560px;background:#1c2029;border-radius:14px;overflow:hidden}
+.feed{width:100%;display:block;background:#1c2029;border-radius:14px;min-height:180px}
+.stage .feed{border-radius:0}
+.overlay{position:absolute;inset:0;width:100%;height:100%}
+.qr{width:100%;max-width:360px;height:auto;display:block;border:2px solid var(--ink);border-radius:18px;background:#f4f1e9}
+input,select{padding:10px 14px;border:2px solid var(--ink);border-radius:12px;background:var(--surface);color:var(--ink);min-width:0;max-width:100%}
+.field{display:grid;gap:4px;font-weight:600;font-size:.92rem}
+.form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-bottom:14px}
+.switch{display:flex;gap:10px;align-items:flex-start;margin:10px 0;font-size:.95rem}
+.switch input{width:20px;height:20px;margin-top:3px;flex:none;accent-color:var(--accent)}
+.board{list-style:none;padding:0;margin:18px 0;display:grid;gap:8px}
+.board li{display:flex;gap:8px;align-items:center;padding:10px 16px;background:var(--surface);border:2px solid var(--ink);border-radius:12px}
+.board li span{margin-left:auto;font-weight:700}
+dialog.admin{background:var(--surface);color:var(--ink);border:2px solid var(--ink);border-radius:18px;padding:24px;max-width:min(92vw,440px);width:100%;max-height:90vh;overflow:auto}
+dialog.admin::backdrop{background:rgba(17,19,25,.6)}
+.admin-form{display:grid;gap:8px}
+.admin-form h2,.admin-form h3{margin:8px 0 0}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+@media (prefers-reduced-motion:reduce){.btn{transition:none}}

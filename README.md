@@ -15,7 +15,7 @@ Every subsequent edition cumulatively inherits every single feature of previous 
    - Background neural pre-warming upon site visit for zero-lag detection.
    - **Big Screen Spectator Mode (`[ 📺 Big Screen ]`)**: Projector-ready high-visibility display with oversized bounding boxes and giant classification callouts.
    - **Diagnostic Incident System (`[ 🛠️ Troubleshoot & Support ]`)**: Generates unique support tickets (`ROBO-ERR-XXXX`) with camera footage snapshots and error telemetry for supervisor debugging.
-   - Admin site control room with Suite Version Lock (`Dynamic`, `v1`, `v2`, `v3`, `v4`, `v5`, `v6`) and **Incident Footage & Telemetry Inspector**.
+   - Admin site control room with Suite Version Lock (`Dynamic`, `v1`, `v2`, `v3`, `v4`, `v5`, `v6`, `v7`) and **Incident Footage & Telemetry Inspector**.
    - Experimental laptop relay ping (`http://127.0.0.1:8765`).
 
 2. **v2 — Secure Suite & Kinematics (`/v2`)**:
@@ -67,6 +67,16 @@ Every subsequent edition cumulatively inherits every single feature of previous 
      - *School Leaderboard*: Gamified point tracker aggregating scores across all missions.
    - **Full Big Screen Spectator Mode & Troubleshoot Incident Ticketing**: Includes the high-contrast projector HUD, Support Code generation, camera snapshot capture, and admin incident inspection.
 
+7. **v7 — Open Lab & Career Roadmap Suite (`/v7`)**:
+   - *Everything in v1 through v6 + specialized Open Lab platform (`files(5)`)*:
+   - **Neo-Brutalist Blocky Robot Hero**: Distinctive geometric SVG robot with floating, animated stickers (`YOLO`, `OpenCV`, `A*`) and high-impact `Syne` and `DM Sans` typography.
+   - **Continuous Marquee Ticker**: Infinite moving ribbon (`ROBOTICS ✦ MACHINE LEARNING ✦ COMPUTER VISION ✦ EMBEDDED SYSTEMS ✦ CONTROL ✦ AI SAFETY`).
+   - **Sense, Decide, Act Trio Framework**: Clear conceptual scaffolding breaking down modern AI robotics into three physical stages.
+   - **Section 04: Dynamic Career Roadmap Generator (`rai-extras.js` `mount('plan')`)**: Tailored 4-factor milestone generator (Target Career, School Stage, Weekly Commitment, Available Hardware Kits) creating actionable checklists that copy directly to clipboard.
+   - **Section 11: Printable QR Poster Generator (`rai-extras.js` `mount('share')`)**: Real-time HTML5 Canvas QR code card generator powered by `qrcode-generator@1.4.4` with multi-colored circular finder patterns, school branding, and 1-click PNG export.
+   - **Full YOLOv8 ONNX Neural Vision Lab Integration**: Runs 80-class real-time neural detection with WebAssembly acceleration, Face-API demographic estimation, OpenCV Canny edge extraction, Big Screen spectator mode, and support ticket generation.
+   - **Universal Version Switcher & Admin Suite Lock**: Updated to include **v7** across all dropdown headers and Site Control Room version lock settings.
+
 ---
 
 ## Big Screen Projector Mode & Diagnostic Support
@@ -103,8 +113,8 @@ Both the **Terms of Service** and **Privacy & Ethics Policy** have been updated 
 
 ## Universal Version Switcher & Admin Control Room
 
-- **Brand Switcher Badge**: Every edition displays a sleek `[v ▾]` badge directly beside the brand mark. Clicking it opens a dropdown allowing instant navigation between **v1, v2, v3, v4, v5, and v6**.
-- **Admin Lock Protection**: Secret 5-click easter egg on the brand mark or footer link opens the **Site Control Room**. Administrators can set **Locked Suite Edition** to lock the website to a single edition (e.g. `Lock to v6`). When locked, the switcher badge is hidden from visitors and any foreign URL automatically redirects to the chosen version.
+- **Brand Switcher Badge**: Every edition displays a sleek `[v ▾]` badge directly beside the brand mark. Clicking it opens a dropdown allowing instant navigation between **v1, v2, v3, v4, v5, v6, and v7**.
+- **Admin Lock Protection**: Secret 5-click easter egg on the brand mark or footer link opens the **Site Control Room**. Administrators can set **Locked Suite Edition** to lock the website to a single edition (e.g. `Lock to v7`). When locked, the switcher badge is hidden from visitors and any foreign URL automatically redirects to the chosen version.
 
 ---
 

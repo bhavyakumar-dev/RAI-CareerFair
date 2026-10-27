@@ -7,7 +7,7 @@ export default {
     if (p === '/v1') {
       return env.ASSETS.fetch(new Request(new URL('/index.html', request.url), request));
     }
-    if (p === '/v2' || p === '/v3' || p === '/v4' || p === '/v5' || p === '/v6') {
+    if (p === '/v2' || p === '/v3' || p === '/v4' || p === '/v5' || p === '/v6' || p === '/v7') {
       return env.ASSETS.fetch(new Request(new URL(`${p}.html`, request.url), request));
     }
 
